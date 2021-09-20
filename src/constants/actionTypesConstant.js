@@ -1,0 +1,1 @@
+export const SET_USER_SIGN_UP ='SET_USER_SIGN_UP'
