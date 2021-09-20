@@ -1,25 +1,25 @@
 import axios from 'axios'
 import {Deserializer} from "jsonapi-serializer";
-import {SET_USER_SIGN_UP} from '../constants/actionTypesConstant'
-import {} from '../constants/apiConstants'
+import {SET_USER_SIGN_UP,SET_ERRORS_MESSAGE} from '../constants/actionTypesConstant'
+import API_CONSTANTS from '../constants/apiConstants'
 export const singUpUser = ({emailUser,passwordUser,firstNameUser,lastNameUser},onCallback)=> dispatch => {
 	axios({
 		method: 'post',
 		url: '/user/signup',
 		data: {emailUser,passwordUser,firstNameUser,lastNameUser},
 		proxy: {
-			host: apiConstants.API_HOSTNAME,
-			port: apiConstants.API_PORT
+			host: API_CONSTANTS.HOSTNAME,
+			port: API_CONSTANTS.PORT
 		},
 	}).then(
 		({data}) => {
-			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, [{authenticationCredential}]) => {
-				localStorage.setItem('credential', authenticationCredential);
+			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, [{userCredential}]) => {
+				localStorage.setItem('credential', userCredential);
 				dispatch({
 					type: SET_USER_SIGN_UP,
-					payload: {authenticationCredential}
+					payload: {userCredential}
 				});
-				typeof callback === 'function' && onCallback()
+				typeof onCallback === 'function' && onCallback()
 			});
 		}
 	).catch(

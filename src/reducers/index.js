@@ -1,2 +1,4 @@
 import {combineReducers} from 'redux'
-export default combineReducers({})
+import userReducer from "./userReducer";
+import errorReducer from "./errorReducer";
+export default combineReducers({userReducer,errorReducer})

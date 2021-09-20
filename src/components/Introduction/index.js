@@ -17,14 +17,106 @@ import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import InputAdornment from '@mui/material/InputAdornment';
 import Visibility from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import FacebookIcon from '@mui/icons-material/Facebook';
 import TwitterIcon from '@mui/icons-material/Twitter';
 import SensorsIcon from '@mui/icons-material/Sensors';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import RedditIcon from '@mui/icons-material/Reddit';
 import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
+import Modal from '@mui/material/Modal';
+import Paper from '@mui/material/Paper';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import {FormControl, InputLabel, OutlinedInput} from "@mui/material";
+
+
+// import {Typography} from "@mui/material";
+
 
 export default () => {
+	const [showSignUpModal,setShowSignUpModal]=React.useState(true);
+	const [passwordVisibility,setPasswordVisibility]=React.useState(false);
+	const [signUpMatchPass,setSignUpMatchPass]=React.useState(false);
+	const [signUpForm,setSignUpForm]=React.useState({
+		data:{
+			fName:"",
+			lName:"",
+			pass:"",
+			passAgain:"",
+			email:""
+		},
+		error:{
+			fNameError:"",
+			lNameError:"",
+			passError:"",
+			passAgainError:"",
+			emailError:"",
+		}
+	})
+	React.useEffect(()=>{
+		if(signUpForm.data.pass!=="" && signUpForm.data.passAgain!=="" && signUpForm.data.pass===signUpForm.data.passAgain){
+			setSignUpMatchPass(true)
+		}
+		else{
+			setSignUpMatchPass(false)
+		}
+	},[signUpForm])
+
+	const onSignUpSubmit=()=>{
+		// console.log("saggg");
+		let errors={
+			fNameError:"",
+			lNameError:"",
+			passError:"",
+			passAgainError:"",
+			emailError:"",
+		}
+
+		// setSignUpForm({...signUpForm,error:{...signUpForm.error,fNameError: "Please enter your first name"}})
+		// setSignUpForm({...signUpForm,error:{...signUpForm.error,lNameError: "Please enter your last name"}})
+
+		// setSignUpForm({
+		// 	...signUpForm,
+		// 	error: {fNameError: "", lNameError: "", passError: "", passAgainError: "", emailError: "",}
+		// })
+		if(signUpForm.data.fName===""){
+			// setSignUpForm({...signUpForm,error:{...signUpForm.error,fNameError: "Please enter your first name"}})
+			errors.fNameError="Please enter your first name"
+		}
+		if(signUpForm.data.lName===""){
+			// setSignUpForm({...signUpForm,error:{...signUpForm.error,lNameError: "Please enter your last name"}})
+			errors.lNameError="Please enter your last name"
+		}
+		if(signUpForm.data.pass===""){
+			// setSignUpForm({...signUpForm,error:{...signUpForm.error,passError: "Please enter your password"}})
+			errors.passError="Please enter your password"
+		}
+		if(signUpForm.data.passAgain===""){
+			// setSignUpForm({...signUpForm,error:{...signUpForm.error,passAgainError: "Please enter your password again"}})
+			errors.passAgainError= "Please enter your password again"
+		}
+		if(signUpForm.data.email===""){
+			// setSignUpForm({...signUpForm,error:{...signUpForm.error,emailError: "Please enter your email"}})
+			errors.emailError="Please enter your email"
+		}
+		else{
+			let emailPattern=/(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
+			if(!emailPattern.test(signUpForm.data.email))errors.emailError="please enter a valid email"
+
+		}
+
+		if(signUpForm.data.pass!=="" && signUpForm.data.passAgain!=="" && signUpForm.data.pass!==signUpForm.data.passAgain){
+			errors.passError="two passwords does not match"
+			errors.passAgainError= "two passwords does not match"
+			// setSignUpForm({...signUpForm,error:{...signUpForm.error,passAgainError: "two passwords does not match"}})
+			// setSignUpForm({...signUpForm,error:{...signUpForm.error,passAgainError: "two passwords does not match"}})
+		}
+		setSignUpForm({...signUpForm,error: errors})
+	}
+
+
+
+
 	return (
 		<React.Fragment>
 				<Box display={"flex"} flexDirection={"column"} minHeight={"100vh"}>
@@ -212,7 +304,7 @@ export default () => {
 									</Box>
 									<Box>
 										{`Don't Have an Account? `}
-										<Link href="#" color="primary" underline="none" >
+										<Link href="#" color="primary" underline="none" onClick={(e)=>{setShowSignUpModal(true)}}>
 											{'Sing UP'}
 										</Link>
 									</Box>
@@ -258,6 +350,144 @@ export default () => {
 						</Container>
 					</Box>
 				</Box>
+			<Modal
+				open={showSignUpModal}
+				keepMounted
+				onBackdropClick={(e)=>{setShowSignUpModal(false)}}
+			>
+				<Box
+					display={"flex"}
+					alignItems={"center"}
+					justifyContent={"center"}
+					flexDirection={"column"}
+					width={"100vw"}
+					height={"100vh"}
+					background={"background.paper"}
+					onClick={(e)=>{setShowSignUpModal(false)}}
+				>
+					<Paper
+						elevation={3}
+						style={{padding:"10px" , borderRadius:"2px"}}
+						onClick={(e)=>{e.stopPropagation()}}
+					>
+						<Box
+							display={"flex"}
+							// alignItems={"center"}
+							// justifyContent={"center"}
+							flexDirection={"column"}
+							width={"400px"}
+						>
+							<Box fontSize={30} fontWeight="fontWeightBold" fontFamily={"Roboto"} textAlign={"center"}>
+								Sign UP
+							</Box>
+							<Box pt={2} display={"flex"}>
+								<Box>First Name</Box> <Box color={"red"}>*</Box>
+							</Box>
+							<Box>
+								<TextField
+									error={signUpForm.error.fNameError !=="" ? true:false }
+									helperText={signUpForm.error.fNameError !=="" ? signUpForm.error.fNameError:null }
+									label="Enter your first name"
+									variant="outlined"
+									fullWidth
+									onChange={(e)=>{setSignUpForm({...signUpForm,data:{...signUpForm.data,fName: e.target.value}})}}
+								/>
+							</Box>
+
+							<Box pt={2} display={"flex"}>
+								<Box>Last Name</Box> <Box color={"red"}>*</Box>
+							</Box>
+							<Box>
+								<TextField
+									error={signUpForm.error.lNameError !=="" ? true:false }
+									helperText={signUpForm.error.lNameError !=="" ? signUpForm.error.lNameError:null }
+									label="Enter your last name"
+									variant="outlined"
+									fullWidth
+									onChange={(e)=>{setSignUpForm({...signUpForm,data:{...signUpForm.data,lName: e.target.value}})}}
+								/>
+							</Box>
+
+							<Box pt={2} display={"flex"}>
+								<Box>Password</Box> <Box color={"red"}>*</Box>
+							</Box>
+							<Box>
+								<FormControl fullWidth variant="outlined">
+									<InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+									<OutlinedInput
+										error={signUpForm.error.passError !=="" ? true:false }
+										helperText={signUpForm.error.passError !=="" ? signUpForm.error.passError:null }
+										inputProps={passwordVisibility ? {type: "text" }:{type: "password" }}
+										endAdornment={
+											<>
+												<CheckCircleOutlineIcon style={signUpMatchPass ? {color:"green"} : {color:"transparent"}}/>
+												<IconButton onClick={(e)=>{setPasswordVisibility(prevState => !prevState)}}>
+													{passwordVisibility ? <Visibility/> : <VisibilityOffIcon/>}
+												</IconButton>
+											</>
+										}
+										// placeholder="Enter your password"
+										label="password"
+										variant="outlined"
+										fullWidth
+										onChange={(e)=>{setSignUpForm({...signUpForm,data:{...signUpForm.data,pass: e.target.value}})}}
+										// notchedOutline={{display:"none"}}
+										// notched={true}
+									/>
+								</FormControl>
+							</Box>
+							<Box pt={2} display={"flex"}>
+								<Box>Retype Password</Box> <Box color={"red"}>*</Box>
+							</Box>
+							<Box>
+								<FormControl fullWidth variant="outlined">
+									<InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
+									<OutlinedInput
+										error={signUpForm.error.passAgainError !=="" ? true:false }
+										helperText={signUpForm.error.passAgainError !=="" ? signUpForm.error.passAgainError:null }
+										inputProps={passwordVisibility ? {type: "text" }:{type: "password" }}
+										endAdornment={
+											<>
+												<CheckCircleOutlineIcon style={signUpMatchPass ? {color:"green"} : {color:"transparent"}}/>
+												<IconButton onClick={(e)=>{setPasswordVisibility(prevState => !prevState)}}>
+													{passwordVisibility ? <Visibility/> : <VisibilityOffIcon/>}
+												</IconButton>
+											</>
+										}
+										label="Enter your password again"
+										variant="outlined"
+										fullWidth
+										onChange={(e)=>{setSignUpForm({...signUpForm,data:{...signUpForm.data,passAgain: e.target.value}})}}
+
+									/>
+								</FormControl>
+
+							</Box>
+
+							<Box pt={2} display={"flex"}>
+								<Box>E-mail</Box> <Box color={"red"}>*</Box>
+							</Box>
+							<Box>
+								<TextField
+									error={signUpForm.error.emailError !=="" ? true:false }
+									helperText={signUpForm.error.emailError !=="" ? signUpForm.error.emailError:null }
+									inputProps={{type: "email"}}
+									label="Enter your E-mail"
+									variant="outlined"
+									fullWidth
+									onChange={(e)=>{setSignUpForm({...signUpForm,data:{...signUpForm.data,email: e.target.value}})}}
+								/>
+							</Box>
+
+							<Box pt={2}>
+								<Button fullWidth variant="contained" onClick={onSignUpSubmit}>Sign UP</Button>
+							</Box>
+
+						</Box>
+
+					</Paper>
+				</Box>
+			</Modal>
 		</React.Fragment>
 	)
 }
