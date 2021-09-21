@@ -1,11 +1,11 @@
 export default {
-	DEVELOPMENT: {
+	development: {
 		PROTOCOL: 'http',
 		HOSTNAME: "127.0.0.1",
 		PORT: 8888,
 
 	},
-	PRODUCTION: {
+	production: {
 		PROTOCOL: 'http',
 		HOSTNAME: "victory.com",
 		PORT: 8888,

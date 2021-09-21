@@ -2,11 +2,12 @@ import axios from 'axios'
 import {Deserializer} from "jsonapi-serializer";
 import {SET_USER_SIGN_UP,SET_ERRORS_MESSAGE} from '../constants/actionTypesConstant'
 import API_CONSTANTS from '../constants/apiConstants'
-export const singUpUser = ({emailUser,passwordUser,firstNameUser,lastNameUser},onCallback)=> dispatch => {
+export const singUpUser = ({userEmail, userPlanPassword, userFirstName, userLastName},onCallback)=> dispatch => {
+	console.log(API_CONSTANTS.HOSTNAME,API_CONSTANTS.PORT)
 	axios({
 		method: 'post',
 		url: '/user/signup',
-		data: {emailUser,passwordUser,firstNameUser,lastNameUser},
+		data: {userEmail, userPlanPassword, userFirstName, userLastName},
 		proxy: {
 			host: API_CONSTANTS.HOSTNAME,
 			port: API_CONSTANTS.PORT

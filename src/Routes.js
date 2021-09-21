@@ -7,18 +7,26 @@ import {
 import IntroductionComponent from './components/Introduction'
 import StoriesUserComponent from './components/User/StoriesUser'
 import CreateStoryComponent from './components/Story/CreateStory'
+import UserContainer from "./containers/UserContainer";
+import EmailVerification from "./components/User/EmailVerfication";
+import CheckVerificationLinkUser from "./components/User/CheckVerificationLinkUser"
 export default ()=>{
 	return (
 		<Router>
 				<Switch>
 					<Route exact path="/">
-                       <IntroductionComponent/>
+						<UserContainer>
+							<IntroductionComponent/>
+						</UserContainer>
 					</Route>
 					<Route exact path="/user/stories">
 						<StoriesUserComponent/>
 					</Route>
 					<Route exact path="/story/create">
 						<CreateStoryComponent/>
+					</Route>
+					<Route exact path="/user/validate">
+						<CheckVerificationLinkUser />
 					</Route>
 				</Switch>
 		</Router>

@@ -1,5 +1,8 @@
 @import "~bootstrap/scss/bootstrap";
-
+::-webkit-scrollbar {
+  width: 0;
+  height: 5px;
+}
 legend {
   float: unset;
   width: 100%;
