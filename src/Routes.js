@@ -7,9 +7,11 @@ import {
 import IntroductionComponent from './components/Introduction'
 import StoriesUserComponent from './components/User/StoriesUser'
 import CreateStoryComponent from './components/Story/CreateStory'
+import ListShortStoryComponent from "./components/Story/ListShortStory";
+import ShortStoryComponent from "./components/Story/ShortStory"
+import VerifyEmailTokenComponent from './components/Token/VerifyEmailToken'
 import UserContainer from "./containers/UserContainer";
-import EmailVerification from "./components/User/EmailVerfication";
-import CheckVerificationLinkUser from "./components/User/CheckVerificationLinkUser"
+import TokenContainer from "./containers/TokenContainer";
 export default ()=>{
 	return (
 		<Router>
@@ -25,8 +27,16 @@ export default ()=>{
 					<Route exact path="/story/create">
 						<CreateStoryComponent/>
 					</Route>
-					<Route exact path="/user/validate">
-						<CheckVerificationLinkUser />
+					<Route exact path="/story/short/list">
+						<ListShortStoryComponent/>
+					</Route>
+					<Route exact path="/story/short/:id">
+						<ShortStoryComponent/>
+					</Route>
+					<Route exact path="/token/verify">
+						<TokenContainer>
+							<VerifyEmailTokenComponent />
+						</TokenContainer>
 					</Route>
 				</Switch>
 		</Router>

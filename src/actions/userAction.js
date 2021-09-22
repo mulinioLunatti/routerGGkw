@@ -31,3 +31,20 @@ export const singUpUser = ({userEmail, userPlanPassword, userFirstName, userLast
 			}) : error.request ? console.log(error.request) : console.log("Error", error.message)
 	)
 }
+export const checkUser = ({userEmail}, onSuccess , onError)=>{
+	axios({
+		method: 'post',
+		url: '/user/check',
+		data: {userEmail},
+		proxy: {
+			host: API_CONSTANTS.HOSTNAME,
+			port: API_CONSTANTS.PORT
+		},
+	}).then(({data})=>{
+		typeof onSuccess === 'function' && onSuccess();
+		window.localStorage.setItem("verified", "true");
+	}).catch(error=>{
+		typeof onError === 'function' && onError(error);
+		// window.localStorage.setItem("verified", true);
+	})
+}

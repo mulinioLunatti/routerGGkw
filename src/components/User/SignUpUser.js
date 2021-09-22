@@ -12,8 +12,33 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {Checkbox, FormControl, InputLabel, LinearProgress, OutlinedInput, Tooltip} from "@mui/material";
 import Link from "@mui/material/Link";
+import faker from 'faker'
+import { useHistory } from "react-router-dom";
 
 export default ({children}) => {
+	let history = useHistory();
+	const [randomMail,setRandomMail]=React.useState("");
+
+	function makeRandomString(length) {
+		let result           = '';
+		let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+		let charactersLength = characters.length;
+		for ( let i = 0; i < length; i++ ) {
+			result += characters.charAt(Math.floor(Math.random() *
+				charactersLength));
+		}
+		return result;
+	}
+	const makeRandomEmail=()=>{
+		return makeRandomString(6)+"@"+makeRandomString(4)+"."+makeRandomString(3);
+	}
+
+	React.useEffect(()=>{
+		setInterval(()=>{setRandomMail(faker.internet.email())} , 1000)
+	},[])
+
+
+
 	// React.useEffect(() => {
 	// 	if (signUpForm.data.pass !== "" && signUpForm.data.passAgain !== "" && signUpForm.data.pass === signUpForm.data.passAgain) {
 	// 		setSignUpMatchPass(true)
@@ -89,7 +114,10 @@ export default ({children}) => {
 		setOpenSignUpUserDialog(false);
 	};
 	const handleSubmitSignUpUserDepartment = (event) => {
-		valueUserMatchPass && singUpUser({...valueSignUpUserInput}, () => handleClickCloseSignUpUserDialog())
+		valueUserMatchPass && singUpUser({...valueSignUpUserInput}, () => {
+			handleClickCloseSignUpUserDialog()
+			history.replace("/token/verify")
+		})
 	};
 	const handleInputChangeValueNewServiceInput = (event) => setValueSignUpUserInput({
 		...valueSignUpUserInput,
@@ -114,6 +142,7 @@ export default ({children}) => {
 					</Box>
 					<Box>
 						<TextField
+							autoFocus
 							label="Enter your first name"
 							variant="outlined"
 							fullWidth
@@ -141,24 +170,26 @@ export default ({children}) => {
 					<Box>
 						<FormControl fullWidth variant="outlined">
 							<InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-							<OutlinedInput
-								inputProps={passwordVisibility ? {type: "text"} : {type: "password"}}
-								endAdornment={
-									<>
-										<IconButton onClick={(e) => {
-											setPasswordVisibility(prevState => !prevState)
-										}}>
-											{passwordVisibility ? <Visibility/> : <VisibilityOffIcon/>}
-										</IconButton>
-									</>
-								}
-								name={'userPlanPassword'}
-								label="password"
-								variant="outlined"
-								fullWidth
-								onChange={handleInputChangeValueNewServiceInput}
+							<Tooltip  title={"Password should be more than 8 characters"} placement={"top"} arrow>
+								<OutlinedInput
+									inputProps={passwordVisibility ? {type: "text"} : {type: "password"}}
+									endAdornment={
+										<>
+											<IconButton onClick={(e) => {
+												setPasswordVisibility(prevState => !prevState)
+											}}>
+												{passwordVisibility ? <Visibility/> : <VisibilityOffIcon/>}
+											</IconButton>
+										</>
+									}
+									name={'userPlanPassword'}
+									label="password"
+									variant="outlined"
+									fullWidth
+									onChange={handleInputChangeValueNewServiceInput}
 
-							/>
+								/>
+							</Tooltip>
 						</FormControl>
 					</Box>
 					<Box pt={2} display={"flex"}>
@@ -171,7 +202,7 @@ export default ({children}) => {
 								inputProps={passwordVisibility ? {type: "text"} : {type: "password"}}
 								endAdornment={
 									<>
-										<Tooltip title={"Passwords are matched!"} color={"success"} placement={"top"} arrow>
+										<Tooltip title={ valueUserMatchPass ? "Passwords are matched!" : ""} color={"success"} placement={"top"} arrow>
 											<CheckCircleOutlineIcon
 												style={valueUserMatchPass ? {color: "green"} : {color: "transparent"}}/>
 										</Tooltip>
@@ -199,7 +230,7 @@ export default ({children}) => {
 					<Box>
 						<TextField
 							inputProps={{type: "email"}}
-							label="Enter your E-mail"
+							label={randomMail}
 							variant="outlined"
 							name={'userEmail'}
 							fullWidth

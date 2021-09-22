@@ -24,40 +24,28 @@ import InstagramIcon from '@mui/icons-material/Instagram';
 import RedditIcon from '@mui/icons-material/Reddit';
 import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
 import SignUpUserComponent from "../User/SignUpUser";
-
+import HeaderComponent from '../Common/Header'
+import LanguageComponent from '../Language'
+import Footer from "../Common/Footer";
 
 export default () => {
 
 	return (
 		<React.Fragment>
 			<Box display={"flex"} flexDirection={"column"} minHeight={"100vh"}>
-				<Container maxWidth={"xl"} disableGutters={false}>
-					<Box display={"flex"} alignItems={"center"}>
-						<Box py={2} flexGrow={1} display={"flex"} flexDirection={"row"}>
-							<WifiTetheringIcon sx={{fontSize: 42}}/>
-							<Box ml={1}>
-								<Box color={"text.primary"}>
-									<Link href="#" underline="none">
-										{'VICTORY'}
-									</Link>
-								</Box>
-								<Box fontSize={12}>
-									PLATFORM
-								</Box>
-							</Box>
-						</Box>
+				<HeaderComponent
+					secondaryMenu={<>
 						<Box px={2} color={"text.primary"}>
-							<Link href="#" color="primary" underline={"none"}>
+							<Link href="/story/short/list" color="primary" underline={"none"}>
 								<SensorsIcon/>{'Live news stream'}
 							</Link>
 						</Box>
-							<Fab size="small">
-								<GTranslateIcon/>
-							</Fab>
-					</Box>
-				</Container>
+						<LanguageComponent/>
+					</>}
+				/>
 				<Divider/>
 				<Container maxWidth={"xl"} disableGutters={false}>
+
 
 					<Box>
 						<style type="text/css">{`
@@ -229,45 +217,8 @@ export default () => {
 						</Grid>
 					</Container>
 				</Box>
-				<Box flexShrink={0} py={5}>
-					<Container maxWidth={"xl"} disableGutters={false}>
-						<Box display={"flex"} alignItems={"center"}>
-							<Box flexGrow={1} sx={{'& > :not(style)': {mr: 1},}}>
-								<Link href="#" color="inherit" underline="none">
-									<InstagramIcon color="disabled"/>
-								</Link>
-								<Link href="#" color="inherit" underline="none">
-									<TwitterIcon color="disabled"/>
-								</Link>
-								<Link href="#" color="inherit" underline="none">
-									<FacebookIcon color="disabled"/>
-								</Link>
-								<Link href="#" color="inherit" underline="none">
-									<RedditIcon color="disabled"/>
-								</Link>
-							</Box>
-							<Box fontSize={12}>
-								© 2021 VictoryPlatform, LLC. All rights reserved.
-							</Box>
-							<Box display={"inline-flex"}>
-								<Box fontSize={12} ml={2}>
-									<Link href="#" color="primary" underline="none">
-										{'Manage Cookies+'}
-									</Link>
-								</Box>
-								<Box fontSize={12} ml={2}>
-									<Link href="#" color="primary" underline="none">
-										{'Newsletters'}
-									</Link>
-								</Box>
-
-
-							</Box>
-						</Box>
-					</Container>
-				</Box>
+				<Footer/>
 			</Box>
-
 		</React.Fragment>
 	)
 }
