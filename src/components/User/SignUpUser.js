@@ -14,10 +14,12 @@ import {Checkbox, FormControl, InputLabel, LinearProgress, OutlinedInput, Toolti
 import Link from "@mui/material/Link";
 import faker from 'faker'
 import { useHistory } from "react-router-dom";
+import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 export default ({children}) => {
 	let history = useHistory();
 	const [randomMail,setRandomMail]=React.useState("");
+	const [showRandomMail,setShowRandomMail]=React.useState(true);
 
 	function makeRandomString(length) {
 		let result           = '';
@@ -111,6 +113,7 @@ export default ({children}) => {
 		setOpenSignUpUserDialog(true);
 	};
 	const handleClickCloseSignUpUserDialog = () => {
+		setValueUserMatchPass(false)
 		setOpenSignUpUserDialog(false);
 	};
 	const handleSubmitSignUpUserDepartment = (event) => {
@@ -203,8 +206,8 @@ export default ({children}) => {
 								endAdornment={
 									<>
 										<Tooltip title={ valueUserMatchPass ? "Passwords are matched!" : ""} color={"success"} placement={"top"} arrow>
-											<CheckCircleOutlineIcon
-												style={valueUserMatchPass ? {color: "green"} : {color: "transparent"}}/>
+											<DoneAllIcon
+												style={valueUserMatchPass ? {color: "green" , cursor:"pointer"} : {color: "transparent"}}/>
 										</Tooltip>
 										<IconButton onClick={(e) => {
 											setPasswordVisibility(prevState => !prevState)
@@ -219,6 +222,7 @@ export default ({children}) => {
 								fullWidth
 								onChange={handleInputChangeValueNewServiceInput}
 
+
 							/>
 						</FormControl>
 
@@ -229,12 +233,12 @@ export default ({children}) => {
 					</Box>
 					<Box>
 						<TextField
-							inputProps={{type: "email"}}
-							label={randomMail}
+							label={ showRandomMail ? randomMail : "Enter your email"}
 							variant="outlined"
 							name={'userEmail'}
 							fullWidth
 							onChange={handleInputChangeValueNewServiceInput}
+							inputProps={{type: "email" ,onFocus:(e)=>setShowRandomMail(false) ,onBlur:(e)=>setShowRandomMail(true)}}
 						/>
 					</Box>
 					<Box

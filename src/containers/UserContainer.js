@@ -1,12 +1,15 @@
 import {connect} from 'react-redux';
 import {
-    singUpUser
+	singUpUser,
+	singInUser
 } from '../actions/userAction';
 
 import UserProvider from '../providers/UserProvider'
+
 export default connect(({errorReducer, userReducer}) => ({
-    error: errorReducer,
-    user: userReducer
+	error: errorReducer,
+	user: userReducer
 }), {
-   singUpUser
+	singUpUser,
+	singInUser
 })(UserProvider);

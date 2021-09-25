@@ -46,7 +46,8 @@ export default function(){
                             <Box marginBottom={"20px"}>
                                 <MailOutlineOutlinedIcon sx={{fontSize:"150px"}}/>
                             </Box>
-                             <Box textAlign={"center"} component={"p"} color="#888888" width={"50%"} marginBottom="20px">we've sent an email to [foo@bar.com] to verify your email address and activate your account. The link in the email will expire in 24 hours.</Box>
+                            <Box component={"h4"} marginBottom={"20px"} >Verify your email address</Box>
+                            <Box textAlign={"center"} component={"p"} color="#888888" width={"50%"} marginBottom="20px">we've sent an email to [foo@bar.com] to verify your email address and activate your account. The link in the email will expire in 24 hours.</Box>
                             <Box textAlign={"center"} component={"p"} fontSize="1.1rem" color="#888888" width={"50%"} marginBottom="15px">Didn't receive the email?</Box>
                             <Box textAlign={"center"} component={"p"} fontSize="0.7rem" color="#888888" width={"50%"}>please check your spam folder.</Box>
 
@@ -101,8 +102,6 @@ export default function(){
                             <Box component={"h4"} marginBottom={"20px"} >Email Verification failed</Box>
                             <Box textAlign={"center"} component={"p"} fontSize="0.7rem" color="#888888" width={"50%"} marginBottom={"20px"}>Either the link had already expired or you did not copy the URL property.</Box>
                             <Link fontSize="0.7rem" sx={{cursor:"pointer"}}>Sign In & resend verification link </Link>
-
-
                         </>
                         :
                         null

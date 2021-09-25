@@ -10,20 +10,8 @@ import IconButton from '@mui/material/IconButton';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import Carousel from 'react-bootstrap/Carousel'
 import Chip from '@mui/material/Chip';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
-import GTranslateIcon from '@mui/icons-material/GTranslate';
-import Checkbox from '@mui/material/Checkbox';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import InputAdornment from '@mui/material/InputAdornment';
-import Visibility from '@mui/icons-material/Visibility';
-import FacebookIcon from '@mui/icons-material/Facebook';
-import TwitterIcon from '@mui/icons-material/Twitter';
 import SensorsIcon from '@mui/icons-material/Sensors';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import RedditIcon from '@mui/icons-material/Reddit';
-import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
-import SignUpUserComponent from "../User/SignUpUser";
+import SignInUserComponent from "../User/SignInUser";
 import HeaderComponent from '../Common/Header'
 import LanguageComponent from '../Language'
 import Footer from "../Common/Footer";
@@ -168,51 +156,7 @@ export default () => {
 								</Box>
 							</Grid>
 							<Grid item xs={3}>
-								<Box fontSize={30} fontWeight="fontWeightBold" fontFamily={"Roboto"}>
-									Sign in to your account
-								</Box>
-								<Box py={2}>
-									E-MAIL*
-								</Box>
-								<Box>
-									<TextField label="Enter your email address" variant="outlined" fullWidth/>
-								</Box>
-								<Box py={2}>
-									PASSWORD*
-								</Box>
-								<Box>
-									<TextField label="Enter your password" variant="outlined"
-									           InputProps={{
-										           endAdornment: <InputAdornment
-											           position="end"><Visibility/></InputAdornment>,
-									           }}
-									           fullWidth/>
-								</Box>
-								<Box display={"flex"} alignItems={"center"}>
-									<Box flexGrow={1}>
-										<FormControlLabel control={<Checkbox defaultChecked/>}
-										                  label="keep me signed in"/>
-									</Box>
-									<Box display={"inline-flex"}>
-										<Link href="#" color="primary" underline="none">
-											{'Forget Password?'}
-										</Link>
-									</Box>
-								</Box>
-
-								<Box py={2}>
-									<Button fullWidth variant="contained">Sign IN</Button>
-								</Box>
-								<Box>
-									{`Don't Have an Account? `}
-									<Box display={"inline-flex"}>
-										<Link href="#" color="primary" underline="none">
-											<SignUpUserComponent>
-												{'Sign UP'}
-											</SignUpUserComponent>
-										</Link>
-									</Box>
-								</Box>
+								<SignInUserComponent/>
 							</Grid>
 						</Grid>
 					</Container>
