@@ -1,6 +1,6 @@
 import {SET_STORY_WRITE} from '../constants/actionTypesConstant'
 const initialState={}
-export default (state= initialState,action)=>{
+export default function storyReducer(state= initialState,action){
 	switch (action.type){
 		case "SET_STORY_WRITE":
 			return{

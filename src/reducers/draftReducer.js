@@ -3,7 +3,7 @@ import {
 } from '../constants/actionTypesConstant'
 
 const initialState = {current: {}}
-export default (state = initialState, action) => {
+export default function draftReducer(state = initialState, action){
 	switch (action.type) {
 		case SET_DRAFT_WRITE:
 			return {

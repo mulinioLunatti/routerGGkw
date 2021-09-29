@@ -14,7 +14,7 @@ import rootReducer from '../reducers'
 // const persistedReducer = persistReducer(persistConfig, rootReducer)
 
 
-export default function storeConfig(initialStore) { createStore(rootReducer, initialStore, composeWithDevTools(applyMiddleware(thunk)), window.REDUX_DEVTOOLS_EXTENSION && window.REDUX_DEVTOOLS_EXTENSION({trace: true}))}
+export default function storeConfig(initialStore) { return createStore(rootReducer, initialStore, composeWithDevTools(applyMiddleware(thunk)), window.REDUX_DEVTOOLS_EXTENSION && window.REDUX_DEVTOOLS_EXTENSION({trace: true}))}
 // export default (initialStore) => {
 //     let store = createStore(persistedReducer, initialStore, composeWithDevTools(applyMiddleware(thunk)), window.REDUX_DEVTOOLS_EXTENSION && window.REDUX_DEVTOOLS_EXTENSION({trace: true}))
 //     let persistor = persistStore(store)
