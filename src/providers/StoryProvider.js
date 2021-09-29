@@ -1,5 +1,5 @@
 import React from "react";
-import {UserContext} from "../contexts/UserContext";
+import {StoryContext} from "../contexts/StoryContext";
 
 export default class extends React.Component {
 	componentDidMount() {
@@ -7,9 +7,9 @@ export default class extends React.Component {
 	render() {
 		return (
 			<>
-				<UserContext.Provider value={{...this.props}}>
+				<StoryContext.Provider value={{...this.props}}>
 					{this.props.children}
-				</UserContext.Provider>
+				</StoryContext.Provider>
 			</>
 		)
 	}

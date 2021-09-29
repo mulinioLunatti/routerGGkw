@@ -21,15 +21,28 @@ import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDiss
 import IconButton from "@mui/material/IconButton";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import {useTokenContext} from "../../contexts/TokenContext";
+import {useHistory, useLocation} from "react-router-dom";
+
 export default (props)=>{
-	const { } = useUserContext();
-	const [forgottenPassEmail , setForgottenPassEmail]=React.useState("")
-	const [state,setState]= React.useState(props.state ? props.state :"forgot") ///  forgot , emailSent , emailFailed
+	function useQuery() {
+		return new URLSearchParams(useLocation().search);
+	}
+	let query = useQuery();
+	const history=useHistory();
+	const { forgotPasswordUser} = useUserContext();
+	const {sendToken} = useTokenContext();
+	const [valueUserEmail , setValueUserEmail]=React.useState("")
+	const [state,setState]= React.useState("forgot") ///  forgot , emailSent , emailFailed , checking?
 	const [loading , setLoading]=React.useState(false);
 
+
+
 	const handleForgotEmailSubmit=(e)=>{
-		setLoading(true)
-		setTimeout(()=>{setState("emailSent") },2000)
+		setLoading(true);
+		// setTimeout(()=>{setState("emailSent") },2000)
+		// forgotPasswordUser({userEmail:forgottenPassEmail},()=>{setLoading(false);setState("emailSent")},()=>{setLoading(false);setState("emailFailed")})
+		sendToken({tokenUserEmail:valueUserEmail ,tokenType:"",tokenService:"ELECTRONIC_MAIL" ,tokenAgent:"PASSWORD"},()=>{console.log("sagggggggggggg");setState("emailSent")})
 	}
 	return(
 		<>
@@ -54,7 +67,7 @@ export default (props)=>{
 								InputProps={{style:{borderRadius:"25px"}}}
 								fullWidth  variant="outlined"
 								label={"Enter your email address"}
-								onChange={(e)=>{setForgottenPassEmail(e.target.value)}}/>
+								onChange={(e)=>{setValueUserEmail(e.target.value)}}/>
 						</Box>
 						<Box marginBottom={"20px"} width={"300px"}>
 							{
@@ -91,8 +104,8 @@ export default (props)=>{
 						<Box marginBottom={"20px"}>
 							<MailOutlineOutlinedIcon sx={{fontSize:"150px"}}/>
 						</Box>
-						<Box component={"h4"} marginBottom={"20px"} >Verify your email address</Box>
-						<Box textAlign={"center"} component={"p"} color="#888888" width={"50%"} marginBottom="20px">we've sent an email to [foo@bar.com] to reset your password. The link in the email will expire in 24 hours.</Box>
+						<Box component={"h4"} marginBottom={"20px"} >Check your Email</Box>
+						<Box textAlign={"center"} component={"p"} color="#888888" width={"50%"} marginBottom="20px">we've sent an email to {valueUserEmail} to reset your password. The link in the email will expire in 24 hours.</Box>
 						<Box textAlign={"center"} component={"p"} fontSize="1.1rem" color="#888888" width={"50%"} marginBottom="15px">Didn't receive the email?</Box>
 						<Box textAlign={"center"} component={"p"} fontSize="0.7rem" color="#888888" width={"50%"}>please check your spam folder.</Box>
 
@@ -102,7 +115,7 @@ export default (props)=>{
 						</Box>
 						<Box display="flex" alignItems={"center"} justifyContent={"center"} flexDirection="row">
 							<Box whiteSpace="nowrap" marginBottom={0}  textAlign={"center"} component={"p"} fontSize="0.7rem" color="#888888" >Add info@victory.com to your contacts and &nbsp;</Box>
-							<Link fontSize="0.7rem" sx={{cursor:"pointer"}}>resend the email.</Link>
+							<Link fontSize="0.7rem" sx={{cursor:"pointer"}} onClick={(e)=>{handleForgotEmailSubmit()}}>resend the email.</Link>
 						</Box>
 						<Box display="flex" alignItems={"center"} justifyContent={"center"} flexDirection="row">
 							<Box whiteSpace="nowrap" marginBottom={0}  textAlign={"center"} component={"p"} fontSize="0.7rem" color="#888888" >still having trouble? Contact at &nbsp; </Box>

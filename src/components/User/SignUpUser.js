@@ -34,71 +34,9 @@ export default ({children}) => {
 	const makeRandomEmail=()=>{
 		return makeRandomString(6)+"@"+makeRandomString(4)+"."+makeRandomString(3);
 	}
-
-	React.useEffect(()=>{
-		setInterval(()=>{setRandomMail(faker.internet.email())} , 1000)
-	},[])
-
-
-
-	// React.useEffect(() => {
-	// 	if (signUpForm.data.pass !== "" && signUpForm.data.passAgain !== "" && signUpForm.data.pass === signUpForm.data.passAgain) {
-	// 		setSignUpMatchPass(true)
-	// 	} else {
-	// 		setSignUpMatchPass(false)
-	// 	}
-	// }, [signUpForm])
-	// const onSignUpSubmit = () => {
-	// 	// console.log("saggg");
-	// 	let errors = {
-	// 		fNameError: "",
-	// 		lNameError: "",
-	// 		passError: "",
-	// 		passAgainError: "",
-	// 		emailError: "",
-	// 	}
-	//
-	// 	// setSignUpForm({...signUpForm,error:{...signUpForm.error,fNameError: "Please enter your first name"}})
-	// 	// setSignUpForm({...signUpForm,error:{...signUpForm.error,lNameError: "Please enter your last name"}})
-	//
-	// 	// setSignUpForm({
-	// 	// 	...signUpForm,
-	// 	// 	error: {fNameError: "", lNameError: "", passError: "", passAgainError: "", emailError: "",}
-	// 	// })
-	// 	if (signUpForm.data.fName === "") {
-	// 		// setSignUpForm({...signUpForm,error:{...signUpForm.error,fNameError: "Please enter your first name"}})
-	// 		errors.fNameError = "Please enter your first name"
-	// 	}
-	// 	if (signUpForm.data.lName === "") {
-	// 		// setSignUpForm({...signUpForm,error:{...signUpForm.error,lNameError: "Please enter your last name"}})
-	// 		errors.lNameError = "Please enter your last name"
-	// 	}
-	// 	if (signUpForm.data.pass === "") {
-	// 		// setSignUpForm({...signUpForm,error:{...signUpForm.error,passError: "Please enter your password"}})
-	// 		errors.passError = "Please enter your password"
-	// 	}
-	// 	if (signUpForm.data.passAgain === "") {
-	// 		// setSignUpForm({...signUpForm,error:{...signUpForm.error,passAgainError: "Please enter your password again"}})
-	// 		errors.passAgainError = "Please enter your password again"
-	// 	}
-	// 	if (signUpForm.data.email === "") {
-	// 		// setSignUpForm({...signUpForm,error:{...signUpForm.error,emailError: "Please enter your email"}})
-	// 		errors.emailError = "Please enter your email"
-	// 	} else {
-	// 		let emailPattern = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/
-	// 		if (!emailPattern.test(signUpForm.data.email)) errors.emailError = "please enter a valid email"
-	//
-	// 	}
-	//
-	// 	if (signUpForm.data.pass !== "" && signUpForm.data.passAgain !== "" && signUpForm.data.pass !== signUpForm.data.passAgain) {
-	// 		errors.passError = "two passwords does not match"
-	// 		errors.passAgainError = "two passwords does not match"
-	// 		// setSignUpForm({...signUpForm,error:{...signUpForm.error,passAgainError: "two passwords does not match"}})
-	// 		// setSignUpForm({...signUpForm,error:{...signUpForm.error,passAgainError: "two passwords does not match"}})
-	// 	}
-	// 	setSignUpForm({...signUpForm, error: errors})
-	// }
-
+	// React.useEffect(()=>{
+	// 	setInterval(()=>{setRandomMail(faker.internet.email())},1000)
+	// },[])
 
 	const {singUpUser, errors} = useUserContext();
 	const [openSignUpUserDialog, setOpenSignUpUserDialog] = React.useState(false);
@@ -119,7 +57,7 @@ export default ({children}) => {
 	const handleSubmitSignUpUserDepartment = (event) => {
 		valueUserMatchPass && singUpUser({...valueSignUpUserInput}, () => {
 			handleClickCloseSignUpUserDialog()
-			history.replace("/token/verify")
+			// history.replace("/token/verify")
 		})
 	};
 	const handleInputChangeValueNewServiceInput = (event) => setValueSignUpUserInput({
@@ -127,7 +65,7 @@ export default ({children}) => {
 		[event.target.name]: event.target.value
 	});
 	React.useEffect(() => {
-		setValueUserMatchPass(valueSignUpUserInput.userMatchPassword === valueSignUpUserInput.userPlanPassword)
+		setValueUserMatchPass(valueSignUpUserInput.userMatchPassword === valueSignUpUserInput.userPlainPassword)
 	}, [valueSignUpUserInput])
 	return (
 		<React.Fragment>
@@ -185,7 +123,7 @@ export default ({children}) => {
 											</IconButton>
 										</>
 									}
-									name={'userPlanPassword'}
+									name={'userPlainPassword'}
 									label="password"
 									variant="outlined"
 									fullWidth

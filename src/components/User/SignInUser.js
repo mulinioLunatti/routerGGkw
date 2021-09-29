@@ -16,7 +16,7 @@ import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 export default ()=>{
 	const {singInUser } = useUserContext();
 	const [valueSignInUserInput, setValueSignInUserInput] = React.useState({})
-	const [passwordVisibility, setPasswordVisibility] = React.useState(false);
+	const [valuePasswordVisibility, setValuePasswordVisibility] = React.useState(false);
 	const handleInputChangeValueSignInUserInput = (event) => setValueSignInUserInput({
 		...valueSignInUserInput,
 		[event.target.name]: event.target.value
@@ -38,6 +38,7 @@ export default ()=>{
 					label="Enter your email address"
 					variant="outlined"
 					fullWidth
+					// value={"info@ga.com"}
 					name={"userEmail"}
 					onChange={handleInputChangeValueSignInUserInput}
 				/>
@@ -49,23 +50,15 @@ export default ()=>{
 				<TextField
 					label="Enter your password"
 					variant="outlined"
-					type={passwordVisibility ? "text" :"password"}
+					type={valuePasswordVisibility ? "text" :"password"}
 					InputProps={{
-						endAdornment: passwordVisibility ? <InputAdornment position="end"><IconButton onClick={(e)=>{setPasswordVisibility(false)}}><Visibility/></IconButton></InputAdornment> : <InputAdornment position="end"><IconButton onClick={(e)=>{setPasswordVisibility(true)}}><VisibilityOffIcon/></IconButton></InputAdornment>
+						endAdornment: valuePasswordVisibility ? <InputAdornment position="end"><IconButton onClick={(e)=>{setValuePasswordVisibility(false)}}><Visibility/></IconButton></InputAdornment> : <InputAdornment position="end"><IconButton onClick={(e)=>{setValuePasswordVisibility(true)}}><VisibilityOffIcon/></IconButton></InputAdornment>
 					}}
 					fullWidth
-					name={"userPlanPassword"}
+					// value={"123456789"}
+					name={"userPlainPassword"}
 					onChange={handleInputChangeValueSignInUserInput}
 				/>
-				{/*<TextField */}
-				{/*	label="Enter your password" */}
-				{/*	variant="outlined" */}
-				{/*	type={passwordVisibility ? "text" :"password"}*/}
-				{/*    InputProps={{*/}
-				{/*	    endAdornment: passwordVisibility ? <InputAdornment position="end"><IconButton onClick={(e)=>{setPasswordVisibility(false)}}><Visibility/></IconButton></InputAdornment> : <InputAdornment position="end"><IconButton onClick={(e)=>{setPasswordVisibility(true)}}><VisibilityOffIcon/></IconButton></InputAdornment>*/}
-				{/*    }}*/}
-				{/*    fullWidth*/}
-				{/*/>*/}
 			</Box>
 			<Box display={"flex"} alignItems={"center"}>
 				<Box flexGrow={1}>
@@ -73,7 +66,7 @@ export default ()=>{
 					                  label="keep me signed in"/>
 				</Box>
 				<Box display={"inline-flex"}>
-					<Link href="#" color="primary" underline="none">
+					<Link href="/user/password/forgot" color="primary" underline="none">
 						{'Forget Password?'}
 					</Link>
 				</Box>

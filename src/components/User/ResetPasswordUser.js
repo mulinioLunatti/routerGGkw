@@ -23,12 +23,12 @@ import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDiss
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 
 export default (props)=>{
-	const { } = useUserContext();
+	const {resetPasswordUser } = useUserContext();
 	function useQuery() {
 		return new URLSearchParams(useLocation().search);
 	}
 	let query = useQuery();
-	const [state,setState]= React.useState(props.state ? props.state :"changePass") ///  changePass , changeSuccess , changeFail
+	const [state,setState]= React.useState(query.get("token") ?"changePass" : "changeFail") ///  changePass , changeSuccess , changeFail
 	const [loading , setLoading]=React.useState(false);
 	const [password,setPassword]=React.useState("");
 	const [passwordConfirm,setPasswordConfirm]=React.useState("");
@@ -36,9 +36,10 @@ export default (props)=>{
 	const [passwordMatch,setPasswordMatch]=React.useState(false);
 
 
-	const handleChangeEmailSubmit=(e)=>{
+	const handleResetPassSubmit=(e)=>{
 		setLoading(true)
-		setTimeout(()=>{setState("changeSuccess") },2000)
+		// setTimeout(()=>{setState("changeSuccess") },2000)
+		passwordMatch && resetPasswordUser({userToken:query.get("token"),userPlainPassword:password},()=>{setLoading(false);setState("changeSuccess")},()=>{setLoading(false);setState("changeFail")})
 	}
 
 	React.useEffect(()=>{
@@ -117,7 +118,7 @@ export default (props)=>{
 								loading ?
 									<LoadingButton sx={{borderRadius:"25px"}} fullWidth loading variant="outlined">change</LoadingButton>
 									:
-									<Button sx={{borderRadius:"25px"}} fullWidth variant={"contained"}  onClick={(e)=>{handleChangeEmailSubmit(e)}}>Next</Button>
+									<Button disabled={!passwordMatch} sx={{borderRadius:"25px"}} fullWidth variant={"contained"}  onClick={(e)=>{handleResetPassSubmit(e)}}>Next</Button>
 							}
 						</Box>
 						<Box marginBottom="60px">

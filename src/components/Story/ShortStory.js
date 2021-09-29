@@ -13,7 +13,7 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import {IconButton} from "@mui/material";
 import VisibilitySensor from 'react-visibility-sensor'
 
-export default function NewsComponent(props){
+export default function (props){
     const [seen,setSeen]=React.useState(false);
     const [isNew , setIsNew]=React.useState(isNaN(props.new) ? false : props.new);
     const [componenetIsVisible , setComponenetIsVisible]=React.useState();
@@ -98,12 +98,12 @@ export default function NewsComponent(props){
     )
 }
 
-NewsComponent.propTypes={
-    img:PropTypes.string,
-    title:PropTypes.string.isRequired,
-    isBreaking:PropTypes.bool,
-    time:PropTypes.string.isRequired,
-    summary:PropTypes.string,
-    new:PropTypes.bool,
-
-}
+// NewsComponent.propTypes={
+//     img:PropTypes.string,
+//     title:PropTypes.string.isRequired,
+//     isBreaking:PropTypes.bool,
+//     time:PropTypes.string.isRequired,
+//     summary:PropTypes.string,
+//     new:PropTypes.bool,
+//
+// }

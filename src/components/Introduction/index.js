@@ -15,19 +15,24 @@ import SignInUserComponent from "../User/SignInUser";
 import HeaderComponent from '../Common/Header'
 import LanguageComponent from '../Language'
 import Footer from "../Common/Footer";
+import {useUserContext} from "../../contexts/UserContext";
+import {withRouter} from "react-router-dom";
 
-export default () => {
-
+export default withRouter((props) => {
+	const {user: {current: {userCredential}}} = useUserContext();
+	React.useEffect(() => {
+		userCredential && props.history.push("/user/stories");
+	}, [userCredential])
 	return (
 		<React.Fragment>
 			<Box display={"flex"} flexDirection={"column"} minHeight={"100vh"}>
 				<HeaderComponent
 					secondaryMenu={<>
-						<Box px={2} color={"text.primary"}>
-							<Link href="/story/short/list" color="primary" underline={"none"}>
-								<SensorsIcon/>{'Live news stream'}
-							</Link>
-						</Box>
+						{/*<Box px={2} color={"text.primary"}>*/}
+						{/*	<Link href="/story/short/list" color="primary" underline={"none"}>*/}
+						{/*		<SensorsIcon/>{'Live news stream'}*/}
+						{/*	</Link>*/}
+						{/*</Box>*/}
 						<LanguageComponent/>
 					</>}
 				/>
@@ -165,4 +170,4 @@ export default () => {
 			</Box>
 		</React.Fragment>
 	)
-}
+})

@@ -1,12 +1,14 @@
 import {connect} from 'react-redux';
 import {
-    confirmToken
+    verifyToken,
+    sendToken,
 } from '../actions/tokenAction';
 
 import TokenProvider from '../providers/TokenProvider'
 export default connect(({errorReducer, tokenReducer}) => ({
     error: errorReducer,
-    user: tokenReducer
+    token: tokenReducer
 }), {
-    confirmToken
+    verifyToken,
+    sendToken,
 })(TokenProvider);

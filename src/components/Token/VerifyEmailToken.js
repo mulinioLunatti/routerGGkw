@@ -5,11 +5,11 @@ import MarkEmailReadOutlinedIcon from '@mui/icons-material/MarkEmailReadOutlined
 import SentimentDissatisfiedOutlinedIcon from '@mui/icons-material/SentimentDissatisfiedOutlined';
 import Box from "@mui/material/Box";
 import Link from "@mui/material/Link";
-import HeaderComponenet from "../Common/Header";
+import HeaderComponent from "../Common/Header";
 import LanguageComponent from "../Language";
-import {checkUser} from "../../actions/userAction";
 
 import {
+    useHistory,
     useLocation
 } from "react-router-dom";
 import Button from "@mui/material/Button";
@@ -17,31 +17,62 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import RedditIcon from "@mui/icons-material/Reddit";
+import MenuUserComponent from "../User/MenuUser";
+import Fab from "@mui/material/Fab";
+import PersonIcon from "@mui/icons-material/Person";
+import {useTokenContext} from "../../contexts/TokenContext";
+import {useUserContext} from "../../contexts/UserContext";
+import {CircularProgress} from "@mui/material";
 export default function(){
+
+
+const history=useHistory();
+    const {user:{current:{userEmail}={}} ,verifyEmailUser} = useUserContext()
+    const {getUser,user:{current:{userEmailVerify}={}}} = useUserContext();
+    const {verifyToken,sendToken , token:{tokenStatus}}=useTokenContext()
+    const [isLoading,setIsLoading] = React.useState(false);
+    console.log("userEmail:"+userEmail);
     function useQuery() {
         return new URLSearchParams(useLocation().search);
     }
     let query = useQuery();
     const token=query.get("token");
-    console.log(token);
-    const [validateState,setValidateState]=React.useState("check");
+    const [validateState,setValidateState]=React.useState(token ? "checkToken" : "checkEmail");// checkEmail checkToken  valid  notValid
+    const resendToken=()=>{
+        setIsLoading(true)
+        sendToken({tokenUserEmail:userEmail,tokenType:"",tokenService:"ELECTRONIC_MAIL",tokenAgent:"EMAIL"} , ()=>{setValidateState("checkToken");setIsLoading(false)})
 
-    // useEffect(()=>{
-    //     if(validateState==="check"){
-    //         checkUser("email" , ()=>{setValidateState("valid")}, (e)=>{setValidateState("notValid")})
-    //     }
-    // },[])
+    }
+
+    useEffect(()=>{
+        if(validateState==="checkToken"){
+            verifyEmailUser({userToken:token} , ()=>{setValidateState("valid")}, (e)=>{setValidateState("notValid")})
+        }
+        else if(validateState==="checkEmail" && !tokenStatus){
+            // console.log("alksjdlakjsdlaksjdlaskjdalskdjalskdjalsd");
+            sendToken({tokenUserEmail:userEmail,tokenType:"",tokenService:"ELECTRONIC_MAIL",tokenAgent:"EMAIL"} , ()=>{setValidateState("checkToken")})
+        }
+    },[]);
+
+
+    React.useEffect(() => {
+        getUser({})
+    }, [getUser])
+    React.useEffect(() => {
+        userEmailVerify === true && history.goBack();
+    }, [userEmailVerify])
 
     return(
         <>
-            <HeaderComponenet
+            <HeaderComponent
                 secondaryMenu={<>
                     <LanguageComponent/>
+                    <MenuUserComponent/>
                 </>}
             />
-            <Container fluid sx={{display:"flex" , alignItems:"center" , justifyContent:"center" , flexDirection:"column",height:"80vh"}}>
+            <Container  sx={{display:"flex" , alignItems:"center" , justifyContent:"center" , flexDirection:"column",height:"80vh"}}>
                 {
-                    validateState ==="check"?
+                    validateState ==="checkEmail" || validateState==="checkToken"?
                         <>
                             <Box marginBottom={"20px"}>
                                 <MailOutlineOutlinedIcon sx={{fontSize:"150px"}}/>
@@ -53,12 +84,16 @@ export default function(){
 
                             <Box display="flex" alignItems={"center"} justifyContent={"center"} flexDirection="row">
                                 <Box whiteSpace="nowrap" marginBottom={0}  textAlign={"center"} component={"p"} fontSize="0.7rem" color="#888888" >Add info@victory.com to your contacts and &nbsp;</Box>
-                                <Link fontSize="0.7rem" sx={{cursor:"pointer"}}>resend the email.</Link>
+                                <Link fontSize="0.7rem" sx={{cursor:"pointer"}} onClick={()=>{resendToken()}}>resend the email.</Link>
                             </Box>
-                            <Box display="flex" alignItems={"center"} justifyContent={"center"} flexDirection="row">
+                            <Box display="flex" alignItems={"center"} justifyContent={"center"} flexDirection="row" marginBottom={"20px"}>
                                 <Box whiteSpace="nowrap" marginBottom={0}  textAlign={"center"} component={"p"} fontSize="0.7rem" color="#888888" >still having trouble? Contact at &nbsp; </Box>
                                 <Link fontSize="0.7rem" sx={{cursor:"pointer"}}>info@victory.com</Link>
                             </Box>
+                            {isLoading?
+                                <CircularProgress color="primary" />
+                                :null
+                            }
                         </>
                         :
                         validateState==="valid"?
@@ -72,7 +107,7 @@ export default function(){
                             </Box>
                             <Box marginBottom="40px">Please use the link below to your account. </Box>
                             <Box width={"15%"} marginBottom={"20px"}>
-                                <Button sx={{borderRadius:"50px"}} fullWidth variant="contained" >CONTINUE</Button>
+                                <Button sx={{borderRadius:"50px"}} fullWidth variant="contained" onClick={(e)=>{history.push("/")}}>CONTINUE</Button>
                             </Box>
                             <Box color="#888888" fontSize={"0.8rem"} marginBottom={"50px"}>Thank you for choosing Victory Platform.</Box>
                             <Box fontSize={12} marginBottom={"20px"}>
@@ -106,7 +141,6 @@ export default function(){
                         :
                         null
                 }
-
 
             </Container>
         </>

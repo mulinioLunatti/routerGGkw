@@ -4,7 +4,12 @@ import {Provider} from "react-redux";
 import storeConfig from './configurations/storeConfig'
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import {SET_USER_CREDENTIAL} from './constants/actionTypesConstant';
 const store =storeConfig();
+(localStorage.credential) && store.dispatch({
+    type: SET_USER_CREDENTIAL,
+    payload: {userCredential: localStorage.credential}
+});
 ReactDOM.render(
     <Provider store={store}>
         <App/>

@@ -31,6 +31,12 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
+import HeaderComponent from '../../components/Common/Header'
+import {useStoryContext} from "../../contexts/StoryContext";
+import {useDraftContext} from "../../contexts/DraftContext";
+import {useUserContext} from "../../contexts/UserContext";
+import {useHistory, withRouter} from "react-router-dom";
+import {useTokenContext} from "../../contexts/TokenContext";
 export const EDITOR_JS_TOOLS = {
 	delimiter: Delimiter,
 	quote: Quote,
@@ -68,44 +74,75 @@ export const EDITOR_JS_TOOLS = {
 
 }
 
-export default () => {
-	const {valueEditorJs,setValueEditorJs} = React.useState({})
+export default withRouter((props) => {
+	const {writeStory} = useStoryContext()
+	const {writeDraft} =useDraftContext()
+
+	const {getUser,user:{current:{userEmailVerify}={}},validateUserToken} = useUserContext();
+	const history=useHistory();
+
+	const [valueEditorJs,setValueEditorJs] = React.useState({})
+	const [valueFinalEditor,setValueFinalEditor] = React.useState({})
 	const [anchorEl, setAnchorEl] = React.useState(null);
+	const [valueEditorTitle,setValueEditorTitle]=React.useState("");
 	const open = Boolean(anchorEl);
+
+	React.useEffect(()=>{
+		validateUserToken({userToken:window.localStorage.getItem("credential")},()=>{},()=>{history.replace("/")})
+	},[])
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
 	const handleClose = () => {
 		setAnchorEl(null);
 	};
+	const [draftState,setDraftState]=React.useState(""); // saved,  saving , saveFailed
+
+	const handleDraft=(editorData)=>{
+		setDraftState("saving");
+		const sendData={
+			draftCategory:"politics",
+			draftType:"BREAKING_STORY",
+			"draftTitle":valueEditorTitle,
+			...editorData
+		}
+		writeDraft({data:sendData},()=>{setDraftState("saved")})
+		setValueFinalEditor(editorData);
+	}
+
+	const handleSubmit=()=>{
+		const sendData={
+			"storyCategory":"politics",
+			"storyTitle":valueEditorTitle,
+			"storyPromote":false,
+			"storyStatus":true,
+			"storyType":"SHORT_STORY",
+			...valueFinalEditor
+		}
+		writeStory({data:sendData},()=>{history.push("/user/stories")})
+		// writeStory({data:sendData},()=>{})
+	}
+	React.useEffect(() => {
+		getUser({})
+	}, [getUser])
+	React.useEffect(() => {
+		userEmailVerify===false && props.history.push("/token/email/verify");
+	}, [userEmailVerify])
 	return (
 		<React.Fragment>
 			<Box>
-				<Container maxWidth={"xl"} disableGutters={false}>
-					<Box display={"flex"} alignItems={"center"}>
-						<Box py={2} flexGrow={1} display={"flex"} flexDirection={"row"}>
-							<WifiTetheringIcon sx={{fontSize: 42}}/>
-							<Box ml={1}>
-								<Box color={"text.primary"}>
-									<Link href="#" underline="none">
-										{'VICTORY'}
-									</Link>
-								</Box>
-								<Box fontSize={12}>
-									PLATFORM
-								</Box>
-							</Box>
-						</Box>
-						<Box px={2} color={"text.primary"}>
-							<Link href="#" color="primary" underline={"none"}>
-								<SensorsIcon/>{'Live news stream'}
-							</Link>
-						</Box>
+				<HeaderComponent secondaryMenu={
+					<>
+						{/*<Box px={2} color={"text.primary"}>*/}
+						{/*	<Link href="/story/short/list" color="primary" underline={"none"}>*/}
+						{/*		<SensorsIcon/>{'Live news stream'}*/}
+						{/*	</Link>*/}
+						{/*</Box>*/}
 						<Fab size="small">
 							<GTranslateIcon/>
 						</Fab>
-						<Fab onClick={handleClick} sx={{ml:2}} size="small" color="primary" aria-label="add">
-							<PersonIcon />
+						<Fab onClick={handleClick} sx={{ml: 2}} size="small" color="primary" aria-label="add">
+							<PersonIcon/>
 						</Fab>
 						<Menu
 							anchorEl={anchorEl}
@@ -138,33 +175,33 @@ export default () => {
 									},
 								},
 							}}
-							transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-							anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+							transformOrigin={{horizontal: 'right', vertical: 'top'}}
+							anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
 						>
 							<MenuItem href={"/user/stories"} component="a">
-								<Avatar><DescriptionOutlinedIcon /></Avatar>
+								<Avatar><DescriptionOutlinedIcon/></Avatar>
 								Stories
 							</MenuItem>
 							<MenuItem>
-								<Avatar><AnalyticsOutlinedIcon /></Avatar>
-								 stats
+								<Avatar><AnalyticsOutlinedIcon/></Avatar>
+								stats
 							</MenuItem>
-							<Divider />
+							<Divider/>
 							<MenuItem>
 								<ListItemIcon>
-									<SettingsOutlinedIcon fontSize="small" />
+									<SettingsOutlinedIcon fontSize="small"/>
 								</ListItemIcon>
 								Account Settings
 							</MenuItem>
 							<MenuItem>
 								<ListItemIcon>
-									<Logout fontSize="small" />
+									<Logout fontSize="small"/>
 								</ListItemIcon>
 								Logout
 							</MenuItem>
 						</Menu>
-					</Box>
-				</Container>
+					</>
+				}/>
 			</Box>
 			<Divider/>
 			<Box>
@@ -172,15 +209,28 @@ export default () => {
 					<Box display={"flex"} alignItems={"center"}>
 						<Box py={2} flexGrow={1} display={"flex"} flexDirection={"row"} alignItems={"center"}>
 							{'Draft Editor Story'}
-							<Box px={2} fontSize={12} color={"text.disabled"}>
-								{'Saved'}
-							</Box>
+							{draftState==="saved" ?
+									<Box px={2} fontSize={12} color={"text.disabled"}>
+										{'Saved'}
+									</Box>
+								:draftState==="saving"?
+									<Box px={2} fontSize={12} color={"text.disabled"}>
+										{'Saving...'}
+									</Box>
+								:draftState==="saveFailed"?
+									<Box px={2} fontSize={12} color={"error.main"}>
+										{'Saving failed'}
+									</Box>
+								:null
+							}
+
+
 						</Box>
 						<Box color={"text.primary"}>
 							<Link href="#" color={"inherit"} underline={"none"}>
 								{'Preview'}
 							</Link>
-							<Button sx={{ml: 2}} variant="outlined" startIcon={<ArrowUpwardOutlinedIcon/>}>
+							<Button sx={{ml: 2}} variant="outlined" startIcon={<ArrowUpwardOutlinedIcon/>} onClick={(e)=>{handleSubmit()}}>
 								submit
 							</Button>
 						</Box>
@@ -191,10 +241,10 @@ export default () => {
 				<Container maxWidth={"xl"} disableGutters={false}>
 					<Box maxWidth={650} m={"0 auto"}>
 						<InputBase
+							onChange={(e)=>{setValueEditorTitle(e.target.value)}}
 							sx={{fontSize: 30}}
 							fullWidth
 							placeholder="Title"
-							inputProps={{'aria-label': 'search google maps'}}
 						/>
 					</Box>
 				</Container>
@@ -203,9 +253,9 @@ export default () => {
 				<Container maxWidth={"xl"} disableGutters={false}>
 					<EditorJs
 						enableReInitialize={true}
-						data={valueEditorJs}
+						// data={valueEditorJs}
 						onReady={(instance)=>instance.toolbar.open()}
-						onChange={(api , newData ) => console.log(api)}
+						onChange={(api , editorData ) => handleDraft(editorData)}
 						tools={EDITOR_JS_TOOLS}
 						placeholder={'Tell your story...'}
 					/>
@@ -213,4 +263,4 @@ export default () => {
 			</Box>
 		</React.Fragment>
 	)
-}
+})

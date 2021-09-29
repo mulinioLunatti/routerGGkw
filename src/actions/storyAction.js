@@ -1,25 +1,25 @@
 import axios from 'axios'
 import {Deserializer} from "jsonapi-serializer";
-import {SET_TOKEN_CONFIRM, SET_ERRORS_MESSAGE, SET_TOKEN_SENT} from '../constants/actionTypesConstant'
+import {SET_STORY_WRITE,SET_ERRORS_MESSAGE} from '../constants/actionTypesConstant'
 import API_CONSTANTS from '../constants/apiConstants'
-export const verifyToken = ({tokenUserEmail,tokenType,tokenService,tokenAgent},onCallback)=> dispatch => {
+export const writeStory = ({data},onCallback)=> dispatch => {
 	axios({
 		method: 'post',
-		url: '/token/verify',
-		data: {tokenUserEmail,tokenType,tokenService,tokenAgent},
+		url: '/story/write',
+		data: {credential:localStorage.credential,...data},
 		proxy: {
 			host: API_CONSTANTS.HOSTNAME,
 			port: API_CONSTANTS.PORT
 		},
 	}).then(
 		({data}) => {
-			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, []) => {
-				dispatch({
-					type: SET_TOKEN_CONFIRM,
-					payload: {}
-				});
-				typeof onCallback === 'function' && onCallback()
-			});
+			// new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, []) => {
+			// 	dispatch({
+			// 		type: SET_STORY_WRITE,
+			// 		payload: {}
+			// 	});
+			// });
+			onCallback && onCallback()
 		}
 	).catch(
 		error => (error.response) ? ([500, 501, 502, 503, 504, 404].includes(error.response.status)) ? console.log(error.response.data) :
@@ -29,18 +29,24 @@ export const verifyToken = ({tokenUserEmail,tokenType,tokenService,tokenAgent},o
 			}) : error.request ? console.log(error.request) : console.log("Error", error.message)
 	)
 }
-export const sendToken=({tokenUserEmail,tokenType,tokenService,tokenAgent},onCallback)=> dispatch => {
+export const getStories = ({},onCallback)=> dispatch => {
 	axios({
 		method: 'post',
-		url: '/token/send',
-		data: {userEmail:tokenUserEmail,tokenType,tokenService,tokenAgent},
+		url: '/story/get',
+		data: {credential:localStorage.credential},
 		proxy: {
 			host: API_CONSTANTS.HOSTNAME,
 			port: API_CONSTANTS.PORT
 		},
 	}).then(
 		({data}) => {
-			onCallback && onCallback()
+			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, []) => {
+				dispatch({
+					type: SET_STORY_WRITE,
+					payload: {}
+				});
+				typeof onCallback === 'function' && onCallback(data)
+			});
 		}
 	).catch(
 		error => (error.response) ? ([500, 501, 502, 503, 504, 404].includes(error.response.status)) ? console.log(error.response.data) :
