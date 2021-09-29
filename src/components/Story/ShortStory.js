@@ -1,11 +1,11 @@
 import React from "react";
-import PropTypes from "prop-types";
-import Grid from "@mui/material/Grid";
+// import PropTypes from "prop-types";
+// import Grid from "@mui/material/Grid";
 import CircleRoundedIcon from '@mui/icons-material/CircleRounded';
 import Box from "@mui/material/Box"
 import Chip from '@mui/material/Chip';
 import ImageOutlinedIcon from '@mui/icons-material/ImageOutlined';
-import CloseIcon from '@mui/icons-material/Close';
+// import CloseIcon from '@mui/icons-material/Close';
 import Avatar from "@mui/material/Avatar";
 import Paper from "@mui/material/Paper";
 import VideocamOutlinedIcon from '@mui/icons-material/VideocamOutlined';
@@ -13,13 +13,14 @@ import InsertDriveFileOutlinedIcon from '@mui/icons-material/InsertDriveFileOutl
 import {IconButton} from "@mui/material";
 import VisibilitySensor from 'react-visibility-sensor'
 
-export default function (props){
+export default function ShortStory(props){
     const [seen,setSeen]=React.useState(false);
     const [isNew , setIsNew]=React.useState(isNaN(props.new) ? false : props.new);
-    const [componenetIsVisible , setComponenetIsVisible]=React.useState();
+    // const [componenetIsVisible , setComponenetIsVisible]=React.useState();
 
     const onVisibilityChange=(isVisible)=>{
-        setComponenetIsVisible(isVisible);
+
+        // setComponenetIsVisible(isVisible);
         if(isVisible && !seen && isNew){
             setSeen(true);
         }

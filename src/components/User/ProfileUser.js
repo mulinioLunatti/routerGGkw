@@ -10,7 +10,7 @@ export default withRouter((props)=>{
 	}, [getUser])
 	React.useEffect(() => {
 		userEmailVerify ===false && props.history.push("/token/email/verify");
-	}, [userEmailVerify])
+	}, [userEmailVerify,props.history])
 	return(
 		<>
 		</>

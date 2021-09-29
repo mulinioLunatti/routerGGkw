@@ -4,10 +4,10 @@ import Footer from "../Common/Footer";
 import ShortStoryComponent from "./ShortStory";
 import Box from "@mui/material/Box";
 import LanguageComponent from "../Language";
-import MenuUserComponent from "../User/MenuUser";
-import Fab from "@mui/material/Fab";
-import PersonIcon from "@mui/icons-material/Person";
-export default function(){
+// import MenuUserComponent from "../User/MenuUser";
+// import Fab from "@mui/material/Fab";
+// import PersonIcon from "@mui/icons-material/Person";
+export default function ListShortStory(){
     return(
         <>
             <Header liveNewsBtn={false}secondaryMenu={<>

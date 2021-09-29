@@ -1,9 +1,9 @@
 import React from "react";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import WifiTetheringIcon from "@mui/icons-material/WifiTethering";
+// import WifiTetheringIcon from "@mui/icons-material/WifiTethering";
 import Link from "@mui/material/Link";
-import SensorsIcon from "@mui/icons-material/Sensors";
+// import SensorsIcon from "@mui/icons-material/Sensors";
 import Fab from "@mui/material/Fab";
 import GTranslateIcon from "@mui/icons-material/GTranslate";
 import Divider from "@mui/material/Divider";
@@ -29,14 +29,14 @@ import PersonIcon from "@mui/icons-material/Person";
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
-import Settings from '@mui/icons-material/Settings';
+// import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import HeaderComponent from '../../components/Common/Header'
 import {useStoryContext} from "../../contexts/StoryContext";
 import {useDraftContext} from "../../contexts/DraftContext";
 import {useUserContext} from "../../contexts/UserContext";
 import {useHistory, withRouter} from "react-router-dom";
-import {useTokenContext} from "../../contexts/TokenContext";
+// import {useTokenContext} from "../../contexts/TokenContext";
 export const EDITOR_JS_TOOLS = {
 	delimiter: Delimiter,
 	quote: Quote,
@@ -81,7 +81,7 @@ export default withRouter((props) => {
 	const {getUser,user:{current:{userEmailVerify}={}},validateUserToken} = useUserContext();
 	const history=useHistory();
 
-	const [valueEditorJs,setValueEditorJs] = React.useState({})
+	// const [valueEditorJs,setValueEditorJs] = React.useState({})
 	const [valueFinalEditor,setValueFinalEditor] = React.useState({})
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [valueEditorTitle,setValueEditorTitle]=React.useState("");
@@ -89,7 +89,7 @@ export default withRouter((props) => {
 
 	React.useEffect(()=>{
 		validateUserToken({userToken:window.localStorage.getItem("credential")},()=>{},()=>{history.replace("/")})
-	},[])
+	},[history,validateUserToken])
 	const handleClick = (event) => {
 		setAnchorEl(event.currentTarget);
 	};
@@ -127,7 +127,7 @@ export default withRouter((props) => {
 	}, [getUser])
 	React.useEffect(() => {
 		userEmailVerify===false && props.history.push("/token/email/verify");
-	}, [userEmailVerify])
+	}, [userEmailVerify,props.history])
 	return (
 		<React.Fragment>
 			<Box>

@@ -1,7 +1,7 @@
 import React from "react";
 import {UserContext} from "../contexts/UserContext";
 
-export default class extends React.Component {
+export default class userProvider extends React.Component {
 	componentDidMount() {
 	}
 	render() {

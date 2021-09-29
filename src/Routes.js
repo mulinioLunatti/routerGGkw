@@ -20,7 +20,7 @@ import UserContainer from "./containers/UserContainer";
 import TokenContainer from "./containers/TokenContainer";
 import StoryContainer from "./containers/StoryContainer";
 import DraftContainer from "./containers/DraftContainer";
-export default () => {
+export default function Routes(){
 	return (
 		<Router>
 			<Switch>

@@ -1,6 +1,7 @@
 import axios from 'axios'
 import {Deserializer} from "jsonapi-serializer";
-import {SET_TOKEN_CONFIRM, SET_ERRORS_MESSAGE, SET_TOKEN_SENT} from '../constants/actionTypesConstant'
+// import {SET_TOKEN_CONFIRM, SET_ERRORS_MESSAGE, SET_TOKEN_SENT} from '../constants/actionTypesConstant'
+import {SET_TOKEN_CONFIRM, SET_ERRORS_MESSAGE} from '../constants/actionTypesConstant'
 import API_CONSTANTS from '../constants/apiConstants'
 export const verifyToken = ({tokenUserEmail,tokenType,tokenService,tokenAgent},onCallback)=> dispatch => {
 	axios({
@@ -13,7 +14,8 @@ export const verifyToken = ({tokenUserEmail,tokenType,tokenService,tokenAgent},o
 		},
 	}).then(
 		({data}) => {
-			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, []) => {
+			// new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, []) => {
+			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, array) => {
 				dispatch({
 					type: SET_TOKEN_CONFIRM,
 					payload: {}

@@ -4,7 +4,7 @@ import {useUserContext} from "../../contexts/UserContext";
 import {useLocation} from "react-router-dom";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import {FormControl, InputLabel, OutlinedInput, TextField, Tooltip} from "@mui/material";
+import {FormControl, InputLabel, OutlinedInput, Tooltip} from "@mui/material";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Button from "@mui/material/Button";
 import Link from "@mui/material/Link";
@@ -22,7 +22,7 @@ import DoneAllIcon from "@mui/icons-material/DoneAll";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
 import VpnKeyOutlinedIcon from '@mui/icons-material/VpnKeyOutlined';
 
-export default (props)=>{
+export default function ResetPasswordUser(props){
 	const {resetPasswordUser } = useUserContext();
 	function useQuery() {
 		return new URLSearchParams(useLocation().search);
@@ -43,7 +43,7 @@ export default (props)=>{
 	}
 
 	React.useEffect(()=>{
-		setPasswordMatch(password===passwordConfirm && password!="");
+		setPasswordMatch(password===passwordConfirm && password!=="");
 	},[password,passwordConfirm])
 
 

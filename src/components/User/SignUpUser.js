@@ -9,36 +9,37 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+// import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import {Checkbox, FormControl, InputLabel, LinearProgress, OutlinedInput, Tooltip} from "@mui/material";
 import Link from "@mui/material/Link";
-import faker from 'faker'
-import { useHistory } from "react-router-dom";
+// import faker from 'faker'
+// import { useHistory } from "react-router-dom";
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 
-export default ({children}) => {
-	let history = useHistory();
-	const [randomMail,setRandomMail]=React.useState("");
-	const [showRandomMail,setShowRandomMail]=React.useState(true);
+export default function SignInUser({children}){
+	// let history = useHistory();
+	// const [randomMail,setRandomMail]=React.useState("");
+	// const [showRandomMail,setShowRandomMail]=React.useState(true);
 
-	function makeRandomString(length) {
-		let result           = '';
-		let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-		let charactersLength = characters.length;
-		for ( let i = 0; i < length; i++ ) {
-			result += characters.charAt(Math.floor(Math.random() *
-				charactersLength));
-		}
-		return result;
-	}
-	const makeRandomEmail=()=>{
-		return makeRandomString(6)+"@"+makeRandomString(4)+"."+makeRandomString(3);
-	}
+	// function makeRandomString(length) {
+	// 	let result           = '';
+	// 	let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+	// 	let charactersLength = characters.length;
+	// 	for ( let i = 0; i < length; i++ ) {
+	// 		result += characters.charAt(Math.floor(Math.random() *
+	// 			charactersLength));
+	// 	}
+	// 	return result;
+	// }
+	// const makeRandomEmail=()=>{
+	// 	return makeRandomString(6)+"@"+makeRandomString(4)+"."+makeRandomString(3);
+	// }
 	// React.useEffect(()=>{
 	// 	setInterval(()=>{setRandomMail(faker.internet.email())},1000)
 	// },[])
 
-	const {singUpUser, errors} = useUserContext();
+	// const {singUpUser, errors} = useUserContext();
+	const {singUpUser} = useUserContext();
 	const [openSignUpUserDialog, setOpenSignUpUserDialog] = React.useState(false);
 	const [valueSignUpUserInput, setValueSignUpUserInput] = React.useState({userMatchPassword: null})
 	const [valueUserMatchPass, setValueUserMatchPass] = React.useState(false);
@@ -60,6 +61,9 @@ export default ({children}) => {
 			// history.replace("/token/verify")
 		})
 	};
+	React.useEffect(()=>{
+		setIsLoading(false);
+	},[])
 	const handleInputChangeValueNewServiceInput = (event) => setValueSignUpUserInput({
 		...valueSignUpUserInput,
 		[event.target.name]: event.target.value
@@ -171,12 +175,14 @@ export default ({children}) => {
 					</Box>
 					<Box>
 						<TextField
-							label={ showRandomMail ? randomMail : "Enter your email"}
+							// label={ showRandomMail ? randomMail : "Enter your email"}
+							label={"example@foo.com"}
 							variant="outlined"
 							name={'userEmail'}
 							fullWidth
 							onChange={handleInputChangeValueNewServiceInput}
-							inputProps={{type: "email" ,onFocus:(e)=>setShowRandomMail(false) ,onBlur:(e)=>setShowRandomMail(true)}}
+							// inputProps={{type: "email" ,onFocus:(e)=>setShowRandomMail(false) ,onBlur:(e)=>setShowRandomMail(true)}}
+							inputProps={{type: "email"}}
 						/>
 					</Box>
 					<Box

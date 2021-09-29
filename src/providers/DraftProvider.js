@@ -1,7 +1,7 @@
 import React from "react";
 import {DraftContext} from "../contexts/DraftContext";
 
-export default class extends React.Component {
+export default class DraftProvider extends React.Component {
 	componentDidMount() {
 	}
 	render() {

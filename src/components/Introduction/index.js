@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import CallMadeIcon from '@mui/icons-material/CallMade';
 import Carousel from 'react-bootstrap/Carousel'
 import Chip from '@mui/material/Chip';
-import SensorsIcon from '@mui/icons-material/Sensors';
+// import SensorsIcon from '@mui/icons-material/Sensors';
 import SignInUserComponent from "../User/SignInUser";
 import HeaderComponent from '../Common/Header'
 import LanguageComponent from '../Language'
@@ -22,7 +22,7 @@ export default withRouter((props) => {
 	const {user: {current: {userCredential}}} = useUserContext();
 	React.useEffect(() => {
 		userCredential && props.history.push("/user/stories");
-	}, [userCredential])
+	}, [userCredential,props.history])
 	return (
 		<React.Fragment>
 			<Box display={"flex"} flexDirection={"column"} minHeight={"100vh"}>

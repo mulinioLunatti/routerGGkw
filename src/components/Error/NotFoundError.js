@@ -3,14 +3,14 @@ import HeaderComponenet from "../Common/Header";
 import LanguageComponent from "../Language";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
+// import MailOutlineOutlinedIcon from "@mui/icons-material/MailOutlineOutlined";
 import Link from "@mui/material/Link";
 import SentimentDissatisfiedRoundedIcon from '@mui/icons-material/SentimentDissatisfiedRounded';
-import {useLocation} from "react-router-dom";
+// import {useLocation} from "react-router-dom";
 import { useHistory } from "react-router-dom";
 
 
-export default () => {
+export default function NotFoundError(){
     let history = useHistory();
     console.log(history)
     return (

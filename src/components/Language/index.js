@@ -4,7 +4,7 @@ import Fab from "@mui/material/Fab";
 
 
 
-export default  () =>{
+export default function Language(){
 
     return (<>
             <Fab size="small">

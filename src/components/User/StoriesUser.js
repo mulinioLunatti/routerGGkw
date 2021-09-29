@@ -5,8 +5,6 @@ import Divider from '@mui/material/Divider';
 import Fab from '@mui/material/Fab';
 import Link from '@mui/material/Link';
 import GTranslateIcon from '@mui/icons-material/GTranslate';
-import SensorsIcon from '@mui/icons-material/Sensors';
-import WifiTetheringIcon from '@mui/icons-material/WifiTethering';
 import AddIcon from '@mui/icons-material/Add';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -33,9 +31,9 @@ import Footer from "../Common/Footer";
 import _ from 'lodash';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
-function createData(name, calories, fat, carbs, protein) {
-    return {name, calories, fat, carbs, protein};
-}
+// function createData(name, calories, fat, carbs, protein) {
+//     return {name, calories, fat, carbs, protein};
+// }
 
 // const rows = [
     // createData('Millions of Microsoft web servers powered by vulnerable legacy software', 159, 6.0, 24, 4.0),
@@ -44,12 +42,12 @@ function createData(name, calories, fat, carbs, protein) {
     // createData('Retros of the lost age: vintage computers from the East', 305, 3.7, 67, 4.3),
     // createData('On the prowl for nudes, California man steals 620,000 iCloud photos', 356, 16.0, 49, 3.9),
 // ];
-export default () => {
+export default function StoriesUser(){
     const history=useHistory()
     const {getUser,user:{current:{userEmailVerify}={}},validateUserToken} = useUserContext();
-    const {valueEditorJs, setValueEditorJs} = React.useState({})
+    // const {valueEditorJs, setValueEditorJs} = React.useState({})
     const [state,setState]=React.useState("loaded"); // loading  ,  loaded   , failed
-    const [anchorEl, setAnchorEl] = React.useState(null);
+    // const [anchorEl, setAnchorEl] = React.useState(null);
     // const [rawRows,setRawRows]=React.useState([]);
     const [rows,setRows]=React.useState([]);
     const [showRows , setShowRows]=React.useState([]);
@@ -59,10 +57,10 @@ export default () => {
 
     React.useEffect(()=>{
         validateUserToken({userToken:window.localStorage.getItem("credential")},()=>{},()=>{history.replace("/")})
-    },[])
+    },[history,validateUserToken])
     React.useEffect(()=>{
         getStories({},(data)=>{console.log(data);setRows(_.reverse(data.data));setState("loaded")})
-    },[])
+    },[getStories])
 
     //userEmailVerification
     React.useEffect(() => {
@@ -70,16 +68,16 @@ export default () => {
     }, [getUser])
     React.useEffect(() => {
         userEmailVerify === false && history.push("/token/email/verify");
-    }, [userEmailVerify])
+    }, [userEmailVerify,history])
 
-    const getStoriesUser=()=>{
-        getStories({},(data)=>{console.log(data);setRows(data.data);setState("loaded")})
-    }
+    // const getStoriesUser=()=>{
+    //     getStories({},(data)=>{console.log(data);setRows(data.data);setState("loaded")})
+    // }
 
 
 
-    const showMoreStories=()=>{
-        // console.log(rows.length)
+    const showMoreStories=React.useCallback(() => {
+        /* function body */
         if(showRows.length < rows.length){
             console.log("shoRows"+ showRows.length);
             for(let i=showRows.length ; i<showRows.length+5 ;i++){
@@ -89,10 +87,22 @@ export default () => {
                 }
             }
         }
-    }
+    },[rows,showRows.length]);
+    // const showMoreStories=()=>{
+    //     // console.log(rows.length)
+    //     if(showRows.length < rows.length){
+    //         console.log("shoRows"+ showRows.length);
+    //         for(let i=showRows.length ; i<showRows.length+5 ;i++){
+    //             console.log(i);
+    //             if(rows[i]){
+    //                 setShowRows((prev)=>[...prev,rows[i]]);
+    //             }
+    //         }
+    //     }
+    // }
     React.useEffect(()=>{
         showMoreStories()
-    },[rows])
+    },[rows,showMoreStories])
 
     return (
         <React.Fragment>

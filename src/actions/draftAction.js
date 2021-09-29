@@ -1,6 +1,7 @@
 import axios from 'axios'
-import {Deserializer} from "jsonapi-serializer";
-import {SET_ERRORS_MESSAGE, SET_DRAFT_WRITE} from '../constants/actionTypesConstant'
+// import {Deserializer} from "jsonapi-serializer";
+import {SET_ERRORS_MESSAGE} from '../constants/actionTypesConstant'
+// import {SET_DRAFT_WRITE} from '../constants/actionTypesConstant'
 import API_CONSTANTS from '../constants/apiConstants'
 export const writeDraft =  ({data},onCallback)=> dispatch => {
 	axios({

@@ -13,7 +13,7 @@ import {useUserContext} from "../../contexts/UserContext";
 import IconButton from "@mui/material/IconButton";
 import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 
-export default ()=>{
+export default function SignInUser(){
 	const {singInUser } = useUserContext();
 	const [valueSignInUserInput, setValueSignInUserInput] = React.useState({})
 	const [valuePasswordVisibility, setValuePasswordVisibility] = React.useState(false);

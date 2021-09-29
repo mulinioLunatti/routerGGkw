@@ -70,7 +70,8 @@ export const singInUser = ({userEmail, userPlainPassword}, onCallback) => dispat
 		}
 	)
 }
-export const getUser= ({}, onCallback) => dispatch => {
+// export const getUser= ({}, onCallback) => dispatch => {
+export const getUser= (data, onCallback) => dispatch => {
 	axios({
 		method: 'post',
 		url: '/user/get',
@@ -100,7 +101,8 @@ export const getUser= ({}, onCallback) => dispatch => {
 		}
 	)
 }
-export const getStoriesUser=({},onSuccess,onError)=> dispatch =>{
+// export const getStoriesUser=({},onSuccess,onError)=> dispatch =>{
+export const getStoriesUser=(data,onSuccess,onError)=> dispatch =>{
 	axios({
 		method: 'post',
 		url: '/user/stories/get',

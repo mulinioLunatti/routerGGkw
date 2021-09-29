@@ -29,7 +29,7 @@ export const writeStory = ({data},onCallback)=> dispatch => {
 			}) : error.request ? console.log(error.request) : console.log("Error", error.message)
 	)
 }
-export const getStories = ({},onCallback)=> dispatch => {
+export const getStories = (data,onCallback)=> dispatch => {
 	axios({
 		method: 'post',
 		url: '/story/get',
@@ -40,7 +40,8 @@ export const getStories = ({},onCallback)=> dispatch => {
 		},
 	}).then(
 		({data}) => {
-			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, []) => {
+			// new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, []) => {
+			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, array) => {
 				dispatch({
 					type: SET_STORY_WRITE,
 					payload: {}

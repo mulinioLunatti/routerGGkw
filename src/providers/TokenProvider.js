@@ -1,7 +1,7 @@
 import React from "react";
 import {TokenContext} from "../contexts/TokenContext";
 
-export default class extends React.Component {
+export default class tokenProvider extends React.Component {
 
 	componentDidMount() {
 

@@ -1,6 +1,6 @@
 import React from "react";
 
-import {useUserContext} from "../../contexts/UserContext";
+// import {useUserContext} from "../../contexts/UserContext";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import HeaderComponenet from "../Common/Header";
 import LanguageComponent from "../Language";
@@ -12,25 +12,24 @@ import InstagramIcon from "@mui/icons-material/Instagram";
 import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import RedditIcon from "@mui/icons-material/Reddit";
-import {ClickAwayListener, TextField} from "@mui/material";
-import propTypes from "prop-types"
+import { TextField} from "@mui/material";
 
 import Button from "@mui/material/Button";
 import LoadingButton from '@mui/lab/LoadingButton';
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
-import IconButton from "@mui/material/IconButton";
-import Visibility from "@mui/icons-material/Visibility";
-import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+// import IconButton from "@mui/material/IconButton";
+// import Visibility from "@mui/icons-material/Visibility";
+// import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
 import {useTokenContext} from "../../contexts/TokenContext";
-import {useHistory, useLocation} from "react-router-dom";
+// import {useHistory, useLocation} from "react-router-dom";
 
-export default (props)=>{
-	function useQuery() {
-		return new URLSearchParams(useLocation().search);
-	}
-	let query = useQuery();
-	const history=useHistory();
-	const { forgotPasswordUser} = useUserContext();
+export default function ForgotPasswordUser(props){
+	// function useQuery() {
+	// 	return new URLSearchParams(useLocation().search);
+	// }
+	// let query = useQuery();
+	// const history=useHistory();
+	// const { forgotPasswordUser} = useUserContext();
 	const {sendToken} = useTokenContext();
 	const [valueUserEmail , setValueUserEmail]=React.useState("")
 	const [state,setState]= React.useState("forgot") ///  forgot , emailSent , emailFailed , checking?

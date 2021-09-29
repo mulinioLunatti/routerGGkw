@@ -13,7 +13,7 @@ import Fab from "@mui/material/Fab";
 import PersonIcon from "@mui/icons-material/Person";
 
 
-export default ({children})=>{
+export default function MenuUser({children}){
 	const [valueAnchorElement, setValueAnchorElement] = React.useState(null);
 
 	const handleClickOpenMenuUser = (event) => {

@@ -18,32 +18,33 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import RedditIcon from "@mui/icons-material/Reddit";
 import VpnKeyOutlinedIcon from "@mui/icons-material/VpnKeyOutlined";
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
-import {useHistory, useLocation} from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import {useUserContext} from "../../contexts/UserContext";
 import Fab from "@mui/material/Fab";
 import PersonIcon from "@mui/icons-material/Person";
 import MenuUserComponent from "./MenuUser";
 
-export default (props)=>{
+export default function ChangePasswordUser(props){
 
     const history=useHistory();
     const {getUser,user:{current:{userEmailVerify}={}}} = useUserContext();
+    const { changePasswordUser,validateUserToken} = useUserContext();
+
     React.useEffect(() => {
         getUser({})
     }, [getUser])
     React.useEffect(() => {
         userEmailVerify===false && props.history.push("/token/email/verify");
-    }, [userEmailVerify])
+    }, [userEmailVerify,props.history])
     React.useEffect(()=>{
         validateUserToken({userToken:window.localStorage.getItem("credential")},()=>{},()=>{history.replace("/")})
-    },[])
+    },[history,validateUserToken])
 
 
-    const { changePasswordUser,validateUserToken} = useUserContext();
-    function useQuery() {
-        return new URLSearchParams(useLocation().search);
-    }
-    let query = useQuery();
+    // function useQuery() {
+    //     return new URLSearchParams(useLocation().search);
+    // }
+    // let query = useQuery();
     const [state,setState]= React.useState(props.state ? props.state :"changePass") ///  changePass , changeSuccess , changeFail
     const [loading , setLoading]=React.useState(false);
 
@@ -54,7 +55,7 @@ export default (props)=>{
     const [passwordMatch,setPasswordMatch]=React.useState(false);
 
     React.useEffect(()=>{
-        setPasswordMatch(password===passwordConfirm && password!="");
+        setPasswordMatch(password===passwordConfirm && password!=="");
     },[password,passwordConfirm])
 
     const handleChangePassSubmit=()=>{
@@ -104,7 +105,7 @@ export default (props)=>{
                                     fullWidth
                                     variant="outlined"
                                     label="old password"
-                                    onChange={(e)=>{setPassword(e.target.value)}}/>
+                                    onChange={(e)=>{setOldPassword(e.target.value)}}/>
                             </FormControl>
                         </Box>
                         <Box marginBottom={"20px"} width={"400px"}>

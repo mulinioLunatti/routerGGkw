@@ -18,18 +18,19 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import RedditIcon from "@mui/icons-material/Reddit";
 import MenuUserComponent from "../User/MenuUser";
-import Fab from "@mui/material/Fab";
-import PersonIcon from "@mui/icons-material/Person";
+// import Fab from "@mui/material/Fab";
+// import PersonIcon from "@mui/icons-material/Person";
 import {useTokenContext} from "../../contexts/TokenContext";
 import {useUserContext} from "../../contexts/UserContext";
 import {CircularProgress} from "@mui/material";
-export default function(){
+export default function VerifyEmailToken(){
 
 
 const history=useHistory();
     const {user:{current:{userEmail}={}} ,verifyEmailUser} = useUserContext()
     const {getUser,user:{current:{userEmailVerify}={}}} = useUserContext();
-    const {verifyToken,sendToken , token:{tokenStatus}}=useTokenContext()
+    // const {verifyToken,sendToken , token:{tokenStatus}}=useTokenContext()
+    const {sendToken , token:{tokenStatus}}=useTokenContext()
     const [isLoading,setIsLoading] = React.useState(false);
     console.log("userEmail:"+userEmail);
     function useQuery() {
@@ -52,7 +53,7 @@ const history=useHistory();
             // console.log("alksjdlakjsdlaksjdlaskjdalskdjalskdjalsd");
             sendToken({tokenUserEmail:userEmail,tokenType:"",tokenService:"ELECTRONIC_MAIL",tokenAgent:"EMAIL"} , ()=>{setValidateState("checkToken")})
         }
-    },[]);
+    },[sendToken,token,tokenStatus,userEmail,validateState,verifyEmailUser]);
 
 
     React.useEffect(() => {
@@ -60,7 +61,7 @@ const history=useHistory();
     }, [getUser])
     React.useEffect(() => {
         userEmailVerify === true && history.goBack();
-    }, [userEmailVerify])
+    }, [userEmailVerify,history])
 
     return(
         <>

@@ -8,7 +8,7 @@ import {
 } from '../constants/actionTypesConstant'
 
 const initialState = {current: {}}
-export default (state = initialState, action) => {
+export default function userReducer(state = initialState, action){
 	switch (action.type) {
 		case SET_USER_STORIES_GET:
 			return {
