@@ -37,42 +37,7 @@ import {useDraftContext} from "../../contexts/DraftContext";
 import {useUserContext} from "../../contexts/UserContext";
 import {useHistory, withRouter} from "react-router-dom";
 // import {useTokenContext} from "../../contexts/TokenContext";
-export const EDITOR_JS_TOOLS = {
-	delimiter: Delimiter,
-	quote: Quote,
-	header: Header,
-	SimpleVideo:SimpleVideo,
-	SimpleImage: {
-		class: SimpleImage,
-		inlineToolbar: true,
-		config: {
-			placeholder: 'Paste image URL'
-		}
-	},
-	embed: Embed,
-	linkTool: {
-		class: LinkTool,
-		config: {
-			endpoint: 'http://localhost:8008/fetchUrl', // Your backend endpoint for url data fetching
-		}
-	},
-	attaches: {
-		class: AttachesTool,
-		config: {
-			endpoint: 'http://localhost:8008/uploadFile'
-		}
-	},
-	image: {
-		class: ImageTool,
-		config: {
-			endpoints: {
-				byFile: 'http://localhost:8008/uploadFile', // Your backend file uploader endpoint
-				byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
-			}
-		}
-	}
-
-}
+import {EDITOR_JS_TOOLS} from "../../configurations/editorConfigurations"
 
 export default withRouter((props) => {
 	const {writeStory} = useStoryContext()

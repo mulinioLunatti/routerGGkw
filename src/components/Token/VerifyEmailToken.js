@@ -51,7 +51,8 @@ const history=useHistory();
         }
         else if(validateState==="checkEmail" && !tokenStatus){
             // console.log("alksjdlakjsdlaksjdlaskjdalskdjalskdjalsd");
-            sendToken({tokenUserEmail:userEmail,tokenType:"",tokenService:"ELECTRONIC_MAIL",tokenAgent:"EMAIL"} , ()=>{setValidateState("checkToken")})
+            // sendToken({tokenUserEmail:userEmail,tokenType:"",tokenService:"ELECTRONIC_MAIL",tokenAgent:"EMAIL"} , ()=>{setValidateState("checkToken")})
+            sendToken({tokenUserEmail:userEmail,tokenType:"",tokenService:"ELECTRONIC_MAIL",tokenAgent:"EMAIL"} , ()=>{})
         }
     },[sendToken,token,tokenStatus,userEmail,validateState,verifyEmailUser]);
 

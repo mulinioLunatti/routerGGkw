@@ -125,7 +125,7 @@ export const getStoriesUser=(data,onSuccess,onError)=> dispatch =>{
 			(error.response) ? ([500, 501, 502, 503, 504, 404,431].includes(error.response.status)) ? console.log(error.response.data,error.response.statusText) :
 				dispatch({
 					type: SET_ERRORS_MESSAGE,
-					payload: error.response.data.data
+					payload: error.response.data.errors
 				}) : error.request ? console.log("error.request") : console.log("Error", error.message)
 			onError && onError(error);
 		}
@@ -153,7 +153,7 @@ export const forgotPasswordUser=({userEmail},onSuccess,onError)=> dispatch =>{
 			(error.response) ? ([500, 501, 502, 503, 504, 404,431].includes(error.response.status)) ? console.log(error.response.data,error.response.statusText) :
 				dispatch({
 					type: SET_ERRORS_MESSAGE,
-					payload: error.response.data.data
+					payload: error.response.data.errors
 				}) : error.request ? console.log("error.request") : console.log("Error", error.message)
 			onError && onError(error);
 		}
@@ -186,7 +186,7 @@ export const resetPasswordUser=({userToken , userPlainPassword},onSuccess , onEr
 			(error.response) ? ([500, 501, 502, 503, 504, 404,431].includes(error.response.status)) ? console.log(error.response.data,error.response.statusText) :
 				dispatch({
 					type: SET_ERRORS_MESSAGE,
-					payload: error.response.data.data
+					payload: error.response.data.errors
 				}) : error.request ? console.log("error.request") : console.log("Error", error.message)
 			onError && onError(error);
 		}
@@ -216,7 +216,7 @@ export const changePasswordUser=({userOldPassword , userNewPassword},onSuccess,o
 			(error.response) ? ([500, 501, 502, 503, 504, 404,431].includes(error.response.status)) ? console.log(error.response.data,error.response.statusText) :
 				dispatch({
 					type: SET_ERRORS_MESSAGE,
-					payload: error.response.data.data
+					payload: error.response.data.errors
 				}) : error.request ? console.log("error.request") : console.log("Error", error.message)
 			onError && onError(error);
 		}
@@ -248,7 +248,7 @@ export const verifyEmailUser=({userToken},onSuccess,onError)=> dispatch =>{
 			(error.response) ? ([500, 501, 502, 503, 504, 404,431].includes(error.response.status)) ? console.log(error.response.data,error.response.statusText) :
 				dispatch({
 					type: SET_ERRORS_MESSAGE,
-					payload: error.response.data.data
+					payload: error.response.data.errors
 				}) : error.request ? console.log("error.request") : console.log("Error", error.message)
 			onError && onError(error);
 		}
