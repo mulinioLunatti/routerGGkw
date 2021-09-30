@@ -99,7 +99,7 @@ export default withRouter((props) => {
 			"storyType":"SHORT_STORY",
 			...valueFinalEditor
 		}
-		writeStory({data:sendData},()=>{history.push("/user/stories")})
+		// writeStory({data:sendData},()=>{history.push("/user/stories")})
 		// writeStory({data:sendData},()=>{})
 	}
 	React.useEffect(() => {
