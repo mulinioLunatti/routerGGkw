@@ -38,7 +38,7 @@ import {useUserContext} from "../../contexts/UserContext";
 import {useHistory, withRouter} from "react-router-dom";
 // import {useTokenContext} from "../../contexts/TokenContext";
 import {EDITOR_JS_TOOLS} from "../../configurations/editorConfigurations"
-import _ from "lodash"
+// import _ from "lodash"
 
 export default withRouter((props) => {
 	const {writeStory} = useStoryContext()
@@ -53,15 +53,15 @@ export default withRouter((props) => {
 	const [valueEditorTitle,setValueEditorTitle]=React.useState("");
 	const open = Boolean(anchorEl);
 	const [valueEditorPreload,setValueEditorPreload]=React.useState([]);
-	let editFdata=[]
+	// let editFdata=[]
 
 	React.useEffect(()=>{
 		if(localStorage.getItem("latestDraft") && valueEditorPreload.length>0){
 			console.log("get a singledraft---------------------" + localStorage.getItem("latestDraft"))
 			getSingleDraft({id:localStorage.getItem("latestDraft")},(data)=>{
 				console.log(data.data[0].attributes["draft-content"])
-				// setValueEditorPreload(data.data[0].attributes["draft-content"]);
-				editFdata=data.data[0].attributes["draft-content"];
+				setValueEditorPreload(data.data[0].attributes["draft-content"]);
+				// editFdata=data.data[0].attributes["draft-content"];
 			})
 		}
 	},[getSingleDraft,valueEditorPreload.length])
@@ -232,8 +232,9 @@ export default withRouter((props) => {
 			<Box>
 				<Container maxWidth={"xl"} disableGutters={false}>
 					<EditorJs
-						// enableReInitialize={true}
-						data={editFdata}
+						enableReInitialize={true}
+						// data={editFdata}
+						data={valueEditorPreload}
 						onReady={(instance)=>instance.toolbar.open()}
 						onChange={(api , editorData ) => handleDraft(editorData)}
 						tools={EDITOR_JS_TOOLS}
