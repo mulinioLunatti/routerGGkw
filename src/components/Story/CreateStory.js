@@ -38,10 +38,11 @@ import {useUserContext} from "../../contexts/UserContext";
 import {useHistory, withRouter} from "react-router-dom";
 // import {useTokenContext} from "../../contexts/TokenContext";
 import {EDITOR_JS_TOOLS} from "../../configurations/editorConfigurations"
+import _ from "lodash"
 
 export default withRouter((props) => {
 	const {writeStory} = useStoryContext()
-	const {writeDraft} =useDraftContext()
+	const {writeDraft,getSingleDraft} =useDraftContext()
 
 	const {getUser,user:{current:{userEmailVerify}={}},validateUserToken} = useUserContext();
 	const history=useHistory();
@@ -51,6 +52,18 @@ export default withRouter((props) => {
 	const [anchorEl, setAnchorEl] = React.useState(null);
 	const [valueEditorTitle,setValueEditorTitle]=React.useState("");
 	const open = Boolean(anchorEl);
+	const [valueEditorPreload,setValueEditorPreload]=React.useState([]);
+
+
+	React.useEffect(()=>{
+		if(localStorage.getItem("latestDraft") && valueEditorPreload.length>0){
+			console.log("get a singledraft---------------------" + localStorage.getItem("latestDraft"))
+			getSingleDraft({id:localStorage.getItem("latestDraft")},(data)=>{
+				console.log(data.data[0].attributes["draft-content"])
+				setValueEditorPreload(data.data[0].attributes["draft-content"]);
+			})
+		}
+	},[])
 
 	React.useEffect(()=>{
 		validateUserToken({userToken:window.localStorage.getItem("credential")},()=>{},()=>{history.replace("/")})
@@ -71,7 +84,8 @@ export default withRouter((props) => {
 			"draftTitle":valueEditorTitle,
 			...editorData
 		}
-		writeDraft({data:sendData},()=>{setDraftState("saved")})
+		// writeDraft({data:sendData},()=>{setDraftState("saved")})
+		_.throttle(()=>{writeDraft({data:sendData},()=>{setDraftState("saved")})},1000)
 		setValueFinalEditor(editorData);
 	}
 
@@ -218,7 +232,7 @@ export default withRouter((props) => {
 				<Container maxWidth={"xl"} disableGutters={false}>
 					<EditorJs
 						enableReInitialize={true}
-						// data={valueEditorJs}
+						data={valueEditorPreload}
 						onReady={(instance)=>instance.toolbar.open()}
 						onChange={(api , editorData ) => handleDraft(editorData)}
 						tools={EDITOR_JS_TOOLS}

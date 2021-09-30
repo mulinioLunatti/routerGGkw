@@ -15,6 +15,7 @@ import CreateStoryComponent from './components/Story/CreateStory'
 import ListShortStoryComponent from "./components/Story/ListShortStory";
 import ShortStoryComponent from "./components/Story/ShortStory"
 import VerifyEmailTokenComponent from './components/Token/VerifyEmailToken'
+import SendEmailTokenComponent from './components/Token/SendEmailToken'
 import NotFoundErrorComponent from './components/Error/NotFoundError'
 import UserContainer from "./containers/UserContainer";
 import TokenContainer from "./containers/TokenContainer";
@@ -74,6 +75,13 @@ export default function Routes(){
 				</Route>
 				<Route exact path="/story/short/:id">
 					<ShortStoryComponent/>
+				</Route>
+				<Route exact path="/token/email/send">
+					<UserContainer>
+						<TokenContainer>
+							<SendEmailTokenComponent/>
+						</TokenContainer>
+					</UserContainer>
 				</Route>
 				<Route exact path="/token/email/verify">
 					<UserContainer>

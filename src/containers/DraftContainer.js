@@ -2,6 +2,7 @@ import {connect} from 'react-redux';
 import {
    writeDraft,
 	getDrafts,
+	getSingleDraft,
 } from '../actions/draftAction';
 
 import DraftProvider from '../providers/DraftProvider'
@@ -11,5 +12,6 @@ export default connect(({errorReducer, draftReducer}) => ({
 	draft: draftReducer
 }), {
 	writeDraft,
-	getDrafts
+	getDrafts,
+	getSingleDraft,
 })(DraftProvider);

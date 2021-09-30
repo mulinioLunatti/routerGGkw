@@ -47,6 +47,7 @@ import {useDraftContext} from "../../contexts/DraftContext";
 // ];
 export default function StoriesUser(){
     const history=useHistory()
+
     const {getUser,user:{current:{userEmailVerify}={}},validateUserToken} = useUserContext();
     // const {valueEditorJs, setValueEditorJs} = React.useState({})
     const [state,setState]=React.useState("loaded"); // loading  ,  loaded   , failed
@@ -166,7 +167,7 @@ export default function StoriesUser(){
                                 <Box flexGrow={1}>
                                     {valueTab==="1" ?  "Your stories("+rows.length+")" : "Your drafts("+drafts.length+")"}
                                 </Box>
-                                <Fab href={"/story/create"} component={"a"} variant={'extended'} size={"small"}
+                                <Fab href={"/story/create"} onClick={(e)=>{window.localStorage.removeItem("latestDraft")}} component={"a"} variant={'extended'} size={"small"}
                                      color={'primary'}>
                                     <AddIcon/>
                                     Write A Story
@@ -241,7 +242,7 @@ export default function StoriesUser(){
                                                         <TableCell align="right">
                                                             <Button sx={{ml: 2, borderRadius: 25}}
                                                                     variant="outlined">DELETE</Button>
-                                                            <Button sx={{ml: 2, borderRadius: 25}} variant="outlined">Edit</Button>
+                                                            <Button sx={{ml: 2, borderRadius: 25}} variant="outlined" >Edit</Button>
                                                             <Button sx={{ml: 2, borderRadius: 25}}
                                                                     variant="outlined">Export</Button>
                                                         </TableCell>
@@ -341,7 +342,10 @@ export default function StoriesUser(){
                                                             <TableCell align="right">
                                                                 <Button sx={{ml: 2, borderRadius: 25}}
                                                                         variant="outlined">DELETE</Button>
-                                                                <Button sx={{ml: 2, borderRadius: 25}} variant="outlined">Edit</Button>
+                                                                <Button sx={{ml: 2, borderRadius: 25}} variant="outlined" onClick={(e)=>{
+                                                                    window.localStorage.setItem("latestDraft",draft.attributes["-id"]);
+                                                                    history.replace("/story/create");
+                                                                }}>Edit</Button>
                                                                 <Button sx={{ml: 2, borderRadius: 25}}
                                                                         variant="outlined">Export</Button>
                                                             </TableCell>

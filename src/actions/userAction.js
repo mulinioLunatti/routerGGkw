@@ -222,7 +222,7 @@ export const changePasswordUser=({userOldPassword , userNewPassword},onSuccess,o
 		}
 	)
 }
-export const verifyEmailUser=({userToken},onSuccess,onError)=> dispatch =>{
+export const verifyEmailUser=({userToken},onSuccess,onError,onComplete)=> dispatch =>{
 	axios({
 		method: 'post',
 		url: '/user/email/verify',
@@ -252,6 +252,7 @@ export const verifyEmailUser=({userToken},onSuccess,onError)=> dispatch =>{
 				}) : error.request ? console.log("error.request") : console.log("Error", error.message)
 			onError && onError(error);
 		}
+	).then(() => typeof onComplete === 'function' && onComplete()
 	)
 }
 export const validateUserToken=({userToken},onSuccess,onError)=>dispatch=>{

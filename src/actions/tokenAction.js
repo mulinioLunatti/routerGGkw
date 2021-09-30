@@ -1,8 +1,11 @@
 import axios from 'axios'
 import {Deserializer} from "jsonapi-serializer";
-// import {SET_TOKEN_CONFIRM, SET_ERRORS_MESSAGE, SET_TOKEN_SENT} from '../constants/actionTypesConstant'
-import {SET_TOKEN_CONFIRM, SET_ERRORS_MESSAGE} from '../constants/actionTypesConstant'
+import {SET_TOKEN_CONFIRM, SET_ERRORS_MESSAGE, END_USER_CREDENTIAL} from '../constants/actionTypesConstant'
 import API_CONSTANTS from '../constants/apiConstants'
+export const logOutUser = () => dispatch => {
+	localStorage.removeItem("credential");
+	dispatch({type: END_USER_CREDENTIAL});
+};
 export const verifyToken = ({tokenUserEmail,tokenType,tokenService,tokenAgent},onCallback)=> dispatch => {
 	axios({
 		method: 'post',

@@ -1,5 +1,5 @@
 import React from "react";
-import HeaderComponenet from "../Common/Header";
+import HeaderComponent from "../Common/Header";
 import LanguageComponent from "../Language";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -65,7 +65,7 @@ export default function ChangePasswordUser(props){
     }
     return(
         <>
-            <HeaderComponenet
+            <HeaderComponent
                 secondaryMenu={<>
                     <LanguageComponent/>
                     <MenuUserComponent>
