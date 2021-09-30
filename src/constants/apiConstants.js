@@ -6,6 +6,7 @@ export default {
 		PORT: 80,
 	},
 	production: {
+		BASEURL:  "http://api.digifunction.com",
 		PROTOCOL: 'http',
 		HOSTNAME: "api.digifunction.com",
 		PORT: 80,

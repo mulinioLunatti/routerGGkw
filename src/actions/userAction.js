@@ -14,13 +14,14 @@ export const logOutUser = () => dispatch => {
 };
 export const singUpUser = ({userEmail, userPlainPassword, userFirstName, userLastName}, onCallback) => dispatch => {
 	axios({
+		baseURL:API_CONSTANTS.baseURL,
 		method: 'post',
 		url: '/user/signup',
 		data: {userEmail, userPlainPassword, userFirstName, userLastName},
-		proxy: {
-			host: API_CONSTANTS.HOSTNAME,
-			port: API_CONSTANTS.PORT
-		},
+		// proxy: {
+		// 	host: API_CONSTANTS.HOSTNAME,
+		// 	port: API_CONSTANTS.PORT
+		// },
 	}).then(
 		({data}) => {
 			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, [{userId,userCredential,userEmail}]) => {
