@@ -36,9 +36,11 @@ export default function Routes(){
 				</Route>
 				<Route exact path="/user/stories">
 					<UserContainer>
-						<StoryContainer>
-							<StoriesUserComponent/>
-						</StoryContainer>
+						<DraftContainer>
+							<StoryContainer>
+								<StoriesUserComponent/>
+							</StoryContainer>
+						</DraftContainer>
 					</UserContainer>
 				</Route>
 				<Route exact path="/user/password/forgot">

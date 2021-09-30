@@ -41,7 +41,7 @@ const history=useHistory();
     const [validateState,setValidateState]=React.useState(token ? "checkToken" : "checkEmail");// checkEmail checkToken  valid  notValid
     const resendToken=()=>{
         setIsLoading(true)
-        sendToken({tokenUserEmail:userEmail,tokenType:"",tokenService:"ELECTRONIC_MAIL",tokenAgent:"EMAIL"} , ()=>{setValidateState("checkToken");setIsLoading(false)})
+        sendToken({tokenUserEmail:userEmail,tokenType:"",tokenService:"ELECTRONIC_MAIL",tokenAgent:"EMAIL"} , ()=>{setValidateState("checkEmail");setIsLoading(false)})
 
     }
 
@@ -104,7 +104,7 @@ const history=useHistory();
                                 <MarkEmailReadOutlinedIcon color="primary" sx={{fontSize:"70px" }}/>
                             </Box>
                             <Box display="flex" justifyContent={"center"} flexDirection="row">
-                                <Box>THanks</Box>
+                                <Box>Thanks</Box>
                                 <Box color="#888888">Your email address has been verified. Your account Is now active.</Box>
                             </Box>
                             <Box marginBottom="40px">Please use the link below to your account. </Box>

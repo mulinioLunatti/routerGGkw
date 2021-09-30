@@ -6,7 +6,7 @@ export const writeStory = ({data},onCallback)=> dispatch => {
 	axios({
 		method: 'post',
 		url: '/story/write',
-		data: {credential:localStorage.credential,...data},
+		data: {credential:localStorage.credential,...data,draftId:window.localStorage.getItem("latestDraft")},
 		proxy: {
 			host: API_CONSTANTS.HOSTNAME,
 			port: API_CONSTANTS.PORT
@@ -19,6 +19,7 @@ export const writeStory = ({data},onCallback)=> dispatch => {
 			// 		payload: {}
 			// 	});
 			// });
+			window.localStorage.removeItem("latestDraft");
 			onCallback && onCallback()
 		}
 	).catch(

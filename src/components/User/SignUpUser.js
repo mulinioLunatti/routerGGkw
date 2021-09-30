@@ -17,26 +17,6 @@ import Link from "@mui/material/Link";
 import DoneAllIcon from '@mui/icons-material/DoneAll';
 
 export default function SignInUser({children}){
-	// let history = useHistory();
-	// const [randomMail,setRandomMail]=React.useState("");
-	// const [showRandomMail,setShowRandomMail]=React.useState(true);
-
-	// function makeRandomString(length) {
-	// 	let result           = '';
-	// 	let characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-	// 	let charactersLength = characters.length;
-	// 	for ( let i = 0; i < length; i++ ) {
-	// 		result += characters.charAt(Math.floor(Math.random() *
-	// 			charactersLength));
-	// 	}
-	// 	return result;
-	// }
-	// const makeRandomEmail=()=>{
-	// 	return makeRandomString(6)+"@"+makeRandomString(4)+"."+makeRandomString(3);
-	// }
-	// React.useEffect(()=>{
-	// 	setInterval(()=>{setRandomMail(faker.internet.email())},1000)
-	// },[])
 
 	// const {singUpUser, errors} = useUserContext();
 	const {singUpUser} = useUserContext();
