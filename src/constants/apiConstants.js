@@ -1,13 +1,13 @@
 export default {
 	development: {
-		BASEURL:"http://192.168.60.24:8888",
+		BASEURL:"http://api.digifunction.com",
 		PROTOCOL: 'http',
-		HOSTNAME: "192.168.60.24",
-		PORT: 8888,
+		HOSTNAME: "http://api.digifunction.com",
+		PORT: 80,
 	},
 	production: {
 		PROTOCOL: 'http',
-		HOSTNAME: "victory.com",
-		PORT: 8888,
+		HOSTNAME: "http://api.digifunction.com",
+		PORT: 80,
 	}
 }[process.env.NODE_ENV];
