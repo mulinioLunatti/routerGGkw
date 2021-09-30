@@ -1,8 +1,6 @@
 import React from "react";
-
-// import {useUserContext} from "../../contexts/UserContext";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import HeaderComponenet from "../Common/Header";
+import HeaderComponent from "../Common/Header";
 import LanguageComponent from "../Language";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -13,7 +11,6 @@ import TwitterIcon from "@mui/icons-material/Twitter";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import RedditIcon from "@mui/icons-material/Reddit";
 import { TextField} from "@mui/material";
-
 import Button from "@mui/material/Button";
 import LoadingButton from '@mui/lab/LoadingButton';
 import SentimentDissatisfiedOutlinedIcon from "@mui/icons-material/SentimentDissatisfiedOutlined";
@@ -45,7 +42,7 @@ export default function ForgotPasswordUser(props){
 	}
 	return(
 		<>
-			<HeaderComponenet
+			<HeaderComponent
 				secondaryMenu={<>
 					<LanguageComponent/>
 				</>}

@@ -53,14 +53,15 @@ export default withRouter((props) => {
 	const [valueEditorTitle,setValueEditorTitle]=React.useState("");
 	const open = Boolean(anchorEl);
 	const [valueEditorPreload,setValueEditorPreload]=React.useState([]);
-
+	let editFdata=[]
 
 	React.useEffect(()=>{
 		if(localStorage.getItem("latestDraft") && valueEditorPreload.length>0){
 			console.log("get a singledraft---------------------" + localStorage.getItem("latestDraft"))
 			getSingleDraft({id:localStorage.getItem("latestDraft")},(data)=>{
 				console.log(data.data[0].attributes["draft-content"])
-				setValueEditorPreload(data.data[0].attributes["draft-content"]);
+				// setValueEditorPreload(data.data[0].attributes["draft-content"]);
+				editFdata=data.data[0].attributes["draft-content"];
 			})
 		}
 	},[getSingleDraft,valueEditorPreload.length])
@@ -84,8 +85,8 @@ export default withRouter((props) => {
 			"draftTitle":valueEditorTitle,
 			...editorData
 		}
-		// writeDraft({data:sendData},()=>{setDraftState("saved")})
-		_.throttle(()=>{writeDraft({data:sendData},()=>{setDraftState("saved")})},1000)
+		writeDraft({data:sendData},()=>{setDraftState("saved")})
+		// _.throttle(()=>{writeDraft({data:sendData},()=>{setDraftState("saved")})},1000)
 		setValueFinalEditor(editorData);
 	}
 
@@ -231,8 +232,8 @@ export default withRouter((props) => {
 			<Box>
 				<Container maxWidth={"xl"} disableGutters={false}>
 					<EditorJs
-						enableReInitialize={true}
-						data={valueEditorPreload}
+						// enableReInitialize={true}
+						data={editFdata}
 						onReady={(instance)=>instance.toolbar.open()}
 						onChange={(api , editorData ) => handleDraft(editorData)}
 						tools={EDITOR_JS_TOOLS}
