@@ -63,7 +63,7 @@ export default withRouter((props) => {
 				setValueEditorPreload(data.data[0].attributes["draft-content"]);
 			})
 		}
-	},[])
+	},[getSingleDraft,valueEditorPreload.length])
 
 	React.useEffect(()=>{
 		validateUserToken({userToken:window.localStorage.getItem("credential")},()=>{},()=>{history.replace("/")})

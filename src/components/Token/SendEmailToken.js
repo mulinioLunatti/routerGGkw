@@ -37,7 +37,7 @@ export default withRouter(function SendEmailToken(props) {
 					}
 				)
 		)
-	}, [sendToken, userEmailVerify, tokenEmailStatus]);
+	}, [sendToken, userEmailVerify, tokenEmailStatus,dispatch,userEmail]);
 	React.useEffect(() => {
 		getUser({})
 	}, [getUser])

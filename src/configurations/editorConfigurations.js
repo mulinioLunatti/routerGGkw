@@ -4,7 +4,7 @@ import Header from "@editorjs/header";
 import SimpleVideo from "simple-video-editorjs";
 import SimpleImage from "@editorjs/simple-image";
 import Embed from "@editorjs/embed";
-import LinkTool from "@editorjs/link";
+// import LinkTool from "@editorjs/link";
 import AttachesTool from "@editorjs/attaches";
 import ImageTool from "@editorjs/image";
 import API_CONSTANTS from '../constants/apiConstants'

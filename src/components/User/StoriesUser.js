@@ -24,7 +24,7 @@ import MenuUserComponent from "./MenuUser";
 import Header from "../Common/Header";
 import PortableWifiOffRoundedIcon from '@mui/icons-material/PortableWifiOffRounded';
 import {useUserContext} from "../../contexts/UserContext";
-import {Skeleton, Tab, Tabs} from "@mui/material";
+import {Skeleton, Tab} from "@mui/material";
 import {useStoryContext} from "../../contexts/StoryContext";
 import {useHistory} from "react-router-dom";
 import Footer from "../Common/Footer";
@@ -71,7 +71,7 @@ export default function StoriesUser(){
         getStories({},(data)=>{console.log(data);setRows(_.reverse(data.data));setState("loaded")})
         getDrafts({},(data)=>{console.log(data);setDrafts(_.reverse(data.data));setState("loaded")})
 
-    },[getStories])
+    },[getStories,getDrafts])
 
     //userEmailVerification
     React.useEffect(() => {
@@ -127,12 +127,12 @@ export default function StoriesUser(){
         if(showRows.length===0){
             showMoreStories()
         }
-    },[rows,showMoreStories])
+    },[rows,showMoreStories,showRows.length])
     React.useEffect(()=>{
         if(showDrafts.length===0){
             showMoreDrafts()
         }
-    },[drafts,showMoreDrafts])
+    },[drafts,showMoreDrafts,showDrafts.length])
     const handleTabChange = (event, newValue) => {
         setValueTab(newValue);
     };
@@ -252,7 +252,7 @@ export default function StoriesUser(){
                                         </Table>
 
                                     </TableContainer>
-                                        <Box  marginTop={"20px"} width={"100%"} textAlign={"center"} marginBottom={"300px"} textAlign={"center"} alignItems={"center"} justifyContent={"center"} visibility={rows.length <5  ? "hidden" : "show"} >
+                                        <Box  marginTop={"20px"} width={"100%"} textAlign={"center"} marginBottom={"300px"} alignItems={"center"} justifyContent={"center"} visibility={rows.length <5  ? "hidden" : "show"} >
                                             {/*<Link href="#" fontSize="30px" onClick={(e)=>{showMoreStories()}}>Show More</Link>*/}
                                             <Button sx={{borderRadius:"25px"}} startIcon={<ExpandMoreIcon/>} variant="contained" onClick={(e)=>{showMoreStories()}}>show more</Button>
                                         </Box>
@@ -354,7 +354,7 @@ export default function StoriesUser(){
                                             </TableBody>
                                         </Table>
                                     </TableContainer>
-                                        <Box  marginTop={"20px"} width={"100%"} textAlign={"center"} marginBottom={"300px"} textAlign={"center"} alignItems={"center"} justifyContent={"center"} visibility={drafts.length  <5 ? "hidden" : "show"} >
+                                        <Box  marginTop={"20px"} width={"100%"}  marginBottom={"300px"} textAlign={"center"} alignItems={"center"} justifyContent={"center"} visibility={drafts.length  <5 ? "hidden" : "show"} >
                                             {/*<Link href="#" fontSize="30px" onClick={(e)=>{showMoreStories()}}>Show More</Link>*/}
                                             <Button sx={{borderRadius:"25px"}} startIcon={<ExpandMoreIcon/>} variant="contained" onClick={(e)=>{showMoreDrafts()}}>show more</Button>
                                         </Box>
