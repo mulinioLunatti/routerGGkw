@@ -15,7 +15,7 @@ export const writeDraft =  ({data},onCallback)=> dispatch => {
 	console.log(sendData);
 	axios({
 		method: 'post',
-		url: '/draft/write',
+		url: '/api/draft/write',
 		data:sendData,
 		headers:{
 			'credential': localStorage.credential,
@@ -51,7 +51,7 @@ export const writeDraft =  ({data},onCallback)=> dispatch => {
 export const getDrafts =  (data,onCallback)=> dispatch => {
 	axios({
 		method: 'post',
-		url: '/draft/get',
+		url: '/api/draft/get',
 		data: {credential:localStorage.credential},
 		headers:{
 			'credential': localStorage.credential,
@@ -83,7 +83,7 @@ export const getDrafts =  (data,onCallback)=> dispatch => {
 export const getSingleDraft =  ({id},onCallback)=> dispatch => {
 	axios({
 		method: 'post',
-		url: '/draft/read',
+		url: '/api/draft/read',
 		data: {credential:localStorage.credential,_id:id},
 		headers:{
 			'credential': localStorage.credential,

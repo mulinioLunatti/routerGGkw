@@ -9,7 +9,7 @@ export const logOutUser = () => dispatch => {
 export const verifyToken = ({tokenUserEmail,tokenType,tokenService,tokenAgent},onCallback)=> dispatch => {
 	axios({
 		method: 'post',
-		url: '/token/verify',
+		url: '/api/token/verify',
 		data: {tokenUserEmail,tokenType,tokenService,tokenAgent},
 		proxy: {
 			host: API_CONSTANTS.HOSTNAME,
@@ -37,7 +37,7 @@ export const verifyToken = ({tokenUserEmail,tokenType,tokenService,tokenAgent},o
 export const sendToken=({tokenUserEmail,tokenType,tokenService,tokenAgent},onCallback)=> dispatch => {
 	axios({
 		method: 'post',
-		url: '/token/send',
+		url: '/api/token/send',
 		data: {userEmail:tokenUserEmail,tokenType,tokenService,tokenAgent},
 		proxy: {
 			host: API_CONSTANTS.HOSTNAME,

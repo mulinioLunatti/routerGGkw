@@ -14,14 +14,14 @@ export const logOutUser = () => dispatch => {
 };
 export const singUpUser = ({userEmail, userPlainPassword, userFirstName, userLastName}, onCallback) => dispatch => {
 	axios({
-		baseURL:API_CONSTANTS.baseURL,
+		// baseURL:API_CONSTANTS.BASEURL,
 		method: 'post',
-		url: '/user/signup',
+		url: '/api/user/signup',
 		data: {userEmail, userPlainPassword, userFirstName, userLastName},
-		// proxy: {
-		// 	host: API_CONSTANTS.HOSTNAME,
-		// 	port: API_CONSTANTS.PORT
-		// },
+		proxy: {
+			host: API_CONSTANTS.HOSTNAME,
+			port: API_CONSTANTS.PORT
+		},
 	}).then(
 		({data}) => {
 			new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, [{userId,userCredential,userEmail}]) => {
@@ -44,7 +44,7 @@ export const singUpUser = ({userEmail, userPlainPassword, userFirstName, userLas
 export const singInUser = ({userEmail, userPlainPassword}, onCallback) => dispatch => {
 	axios({
 		method: 'post',
-		url: '/user/signin',
+		url: '/api/user/signin',
 		data: {userEmail, userPlainPassword},
 		proxy: {
 			host: API_CONSTANTS.HOSTNAME,
@@ -75,7 +75,7 @@ export const singInUser = ({userEmail, userPlainPassword}, onCallback) => dispat
 export const getUser= (data, onCallback) => dispatch => {
 	axios({
 		method: 'post',
-		url: '/user/get',
+		url: '/api/user/get',
 		data: {},
 		headers: {'credential': localStorage.credential},
 		proxy: {
@@ -106,7 +106,7 @@ export const getUser= (data, onCallback) => dispatch => {
 export const getStoriesUser=(data,onSuccess,onError)=> dispatch =>{
 	axios({
 		method: 'post',
-		url: '/user/stories/get',
+		url: '/api/user/stories/get',
 		data: {
 
 		},
@@ -135,7 +135,7 @@ export const getStoriesUser=(data,onSuccess,onError)=> dispatch =>{
 export const forgotPasswordUser=({userEmail},onSuccess,onError)=> dispatch =>{
 	axios({
 		method: 'post',
-		url: '/user/password/forgot',
+		url: '/api/user/password/forgot',
 		data: {
 			userEmail
 		},
@@ -163,7 +163,7 @@ export const forgotPasswordUser=({userEmail},onSuccess,onError)=> dispatch =>{
 export const resetPasswordUser=({userToken , userPlainPassword},onSuccess , onError)=> dispatch =>{
 	axios({
 		method: 'post',
-		url: '/user/password/reset',
+		url: '/api/user/password/reset',
 		data: {
 			userPlainPassword
 		},
@@ -197,7 +197,7 @@ export const resetPasswordUser=({userToken , userPlainPassword},onSuccess , onEr
 export const changePasswordUser=({userOldPassword , userNewPassword},onSuccess,onError)=> dispatch =>{
 	axios({
 		method: 'post',
-		url: '/user/password/forgot',
+		url: '/api/user/password/forgot',
 		data: {
 			userOldPassword,
 			userNewPassword
@@ -226,7 +226,7 @@ export const changePasswordUser=({userOldPassword , userNewPassword},onSuccess,o
 export const verifyEmailUser=({userToken},onSuccess,onError,onComplete)=> dispatch =>{
 	axios({
 		method: 'post',
-		url: '/user/email/verify',
+		url: '/api/user/email/verify',
 		data: {
 
 		},
