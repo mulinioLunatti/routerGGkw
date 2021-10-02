@@ -1,1 +1,2 @@
 /api http://api.digifunction.com/:splat
+/user/logout /index.html 200
