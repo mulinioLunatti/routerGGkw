@@ -13,7 +13,6 @@ export const EDITOR_JS_TOOLS = {
     delimiter: Delimiter,
     quote: Quote,
     header: Header,
-    SimpleVideo:SimpleVideo,
     SimpleImage: {
         class: SimpleImage,
         inlineToolbar: true,
