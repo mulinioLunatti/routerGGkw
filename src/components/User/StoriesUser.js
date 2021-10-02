@@ -33,6 +33,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {TabContext, TabList, TabPanel} from "@mui/lab";
 import {useDraftContext} from "../../contexts/DraftContext";
 import EditorJs from "react-editor-js";
+import {EDITOR_JS_TOOLS} from "../../configurations/editorConfigurations";
 // import {TabPanel} from "@mui/lab";
 
 // function createData(name, calories, fat, carbs, protein) {
@@ -178,7 +179,7 @@ export default function StoriesUser(){
                     {previewDialogOpen && previewItem.attributes["story-title"]}
                 </DialogTitle>
                 <DialogContent>
-                    <EditorJs readOnly={true}  enableReInitialize={true} data={previewDialogOpen && { "time" : 1550476186479,"version" : "2.8.1","blocks":previewItem.attributes["story-content"]}}/>
+                    <EditorJs tools={EDITOR_JS_TOOLS} readOnly={true}  enableReInitialize={true} data={previewDialogOpen && { "time" : 1550476186479,"version" : "2.8.1","blocks":previewItem.attributes["story-content"]}}/>
                     <span sx={{opcaity:"0"}}>{previewId}</span>
                 </DialogContent>
             </Dialog>
