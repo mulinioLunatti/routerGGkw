@@ -8,11 +8,11 @@ import Fab from "@mui/material/Fab";
 import GTranslateIcon from "@mui/icons-material/GTranslate";
 import Divider from "@mui/material/Divider";
 import Button from '@mui/material/Button';
-import Avatar from '@mui/material/Avatar';
+// import Avatar from '@mui/material/Avatar';
 import ArrowUpwardOutlinedIcon from '@mui/icons-material/ArrowUpwardOutlined';
-import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
-import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
+// import DescriptionOutlinedIcon from '@mui/icons-material/DescriptionOutlined';
+// import AnalyticsOutlinedIcon from '@mui/icons-material/AnalyticsOutlined';
+// import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
 import InputBase from '@mui/material/InputBase';
 // import ImageTool from '@editorjs/image';
 // import SimpleVideo from 'simple-video-editorjs';
@@ -26,11 +26,11 @@ import EditorJs from 'react-editor-js';
 // import Embed from '@editorjs/embed';
 import './CreateStory.scss'
 import PersonIcon from "@mui/icons-material/Person";
-import Menu from '@mui/material/Menu';
-import MenuItem from '@mui/material/MenuItem';
-import ListItemIcon from '@mui/material/ListItemIcon';
+// import Menu from '@mui/material/Menu';
+// import MenuItem from '@mui/material/MenuItem';
+// import ListItemIcon from '@mui/material/ListItemIcon';
 // import Settings from '@mui/icons-material/Settings';
-import Logout from '@mui/icons-material/Logout';
+// import Logout from '@mui/icons-material/Logout';
 import HeaderComponent from '../../components/Common/Header'
 import {useStoryContext} from "../../contexts/StoryContext";
 import {useDraftContext} from "../../contexts/DraftContext";
@@ -39,6 +39,8 @@ import {useHistory, withRouter} from "react-router-dom";
 // import {useTokenContext} from "../../contexts/TokenContext";
 import {EDITOR_JS_TOOLS} from "../../configurations/editorConfigurations"
 // import _ from "lodash"
+// import isEqual from 'react-fast-compare'
+import MenuUserComponent from "../User/MenuUser";
 
 export default withRouter((props) => {
 	const {writeStory} = useStoryContext()
@@ -49,9 +51,9 @@ export default withRouter((props) => {
 
 	// const [valueEditorJs,setValueEditorJs] = React.useState({})
 	const [valueFinalEditor,setValueFinalEditor] = React.useState({})
-	const [anchorEl, setAnchorEl] = React.useState(null);
+	// const [anchorEl, setAnchorEl] = React.useState(null);
 	const [valueEditorTitle,setValueEditorTitle]=React.useState("");
-	const open = Boolean(anchorEl);
+	// const open = Boolean(anchorEl);
 	const [valueEditorPreload,setValueEditorPreload]=React.useState([]);
 	// let editFdata=[]
 
@@ -69,12 +71,12 @@ export default withRouter((props) => {
 	React.useEffect(()=>{
 		validateUserToken({userToken:window.localStorage.getItem("credential")},()=>{},()=>{history.replace("/")})
 	},[history,validateUserToken])
-	const handleClick = (event) => {
-		setAnchorEl(event.currentTarget);
-	};
-	const handleClose = () => {
-		setAnchorEl(null);
-	};
+	// const handleClick = (event) => {
+	// 	setAnchorEl(event.currentTarget);
+	// };
+	// const handleClose = () => {
+	// 	setAnchorEl(null);
+	// };
 	const [draftState,setDraftState]=React.useState(""); // saved,  saving , saveFailed
 
 	const handleDraft=(editorData)=>{
@@ -99,14 +101,14 @@ export default withRouter((props) => {
 			"storyType":"SHORT_STORY",
 			...valueFinalEditor
 		}
-		// writeStory({data:sendData},()=>{history.push("/user/stories")})
+		writeStory({data:sendData},()=>{history.push("/user/stories")})
 		// writeStory({data:sendData},()=>{})
 	}
 	React.useEffect(() => {
 		getUser({})
 	}, [getUser])
 	React.useEffect(() => {
-		userEmailVerify===false && props.history.push("/token/email/verify");
+		userEmailVerify===false && props.history.push("/token/email/send");
 	}, [userEmailVerify,props.history])
 	return (
 		<React.Fragment>
@@ -121,65 +123,70 @@ export default withRouter((props) => {
 						<Fab size="small">
 							<GTranslateIcon/>
 						</Fab>
-						<Fab onClick={handleClick} sx={{ml: 2}} size="small" color="primary" aria-label="add">
-							<PersonIcon/>
-						</Fab>
-						<Menu
-							anchorEl={anchorEl}
-							open={open}
-							onClose={handleClose}
-							onClick={handleClose}
-							PaperProps={{
-								elevation: 0,
-								sx: {
-									overflow: 'visible',
-									filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
-									mt: 1.5,
-									'& .MuiAvatar-root': {
-										width: 32,
-										height: 32,
-										ml: -0.5,
-										mr: 1,
-									},
-									'&:before': {
-										content: '""',
-										display: 'block',
-										position: 'absolute',
-										top: 0,
-										right: 14,
-										width: 10,
-										height: 10,
-										bgcolor: 'background.paper',
-										transform: 'translateY(-50%) rotate(45deg)',
-										zIndex: 0,
-									},
-								},
-							}}
-							transformOrigin={{horizontal: 'right', vertical: 'top'}}
-							anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}
-						>
-							<MenuItem href={"/user/stories"} component="a">
-								<Avatar><DescriptionOutlinedIcon/></Avatar>
-								Stories
-							</MenuItem>
-							<MenuItem>
-								<Avatar><AnalyticsOutlinedIcon/></Avatar>
-								stats
-							</MenuItem>
-							<Divider/>
-							<MenuItem>
-								<ListItemIcon>
-									<SettingsOutlinedIcon fontSize="small"/>
-								</ListItemIcon>
-								Account Settings
-							</MenuItem>
-							<MenuItem>
-								<ListItemIcon>
-									<Logout fontSize="small"/>
-								</ListItemIcon>
-								Logout
-							</MenuItem>
-						</Menu>
+						<MenuUserComponent>
+							<Fab  sx={{ml:2}} size="small" color="primary" >
+								<PersonIcon />
+							</Fab>
+						</MenuUserComponent>
+						{/*<Fab onClick={handleClick} sx={{ml: 2}} size="small" color="primary" aria-label="add">*/}
+						{/*	<PersonIcon/>*/}
+						{/*</Fab>*/}
+						{/*<Menu*/}
+						{/*	anchorEl={anchorEl}*/}
+						{/*	open={open}*/}
+						{/*	onClose={handleClose}*/}
+						{/*	onClick={handleClose}*/}
+						{/*	PaperProps={{*/}
+						{/*		elevation: 0,*/}
+						{/*		sx: {*/}
+						{/*			overflow: 'visible',*/}
+						{/*			filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',*/}
+						{/*			mt: 1.5,*/}
+						{/*			'& .MuiAvatar-root': {*/}
+						{/*				width: 32,*/}
+						{/*				height: 32,*/}
+						{/*				ml: -0.5,*/}
+						{/*				mr: 1,*/}
+						{/*			},*/}
+						{/*			'&:before': {*/}
+						{/*				content: '""',*/}
+						{/*				display: 'block',*/}
+						{/*				position: 'absolute',*/}
+						{/*				top: 0,*/}
+						{/*				right: 14,*/}
+						{/*				width: 10,*/}
+						{/*				height: 10,*/}
+						{/*				bgcolor: 'background.paper',*/}
+						{/*				transform: 'translateY(-50%) rotate(45deg)',*/}
+						{/*				zIndex: 0,*/}
+						{/*			},*/}
+						{/*		},*/}
+						{/*	}}*/}
+						{/*	transformOrigin={{horizontal: 'right', vertical: 'top'}}*/}
+						{/*	anchorOrigin={{horizontal: 'right', vertical: 'bottom'}}*/}
+						{/*>*/}
+						{/*	<MenuItem href={"/user/stories"} component="a">*/}
+						{/*		<Avatar><DescriptionOutlinedIcon/></Avatar>*/}
+						{/*		Stories*/}
+						{/*	</MenuItem>*/}
+						{/*	<MenuItem>*/}
+						{/*		<Avatar><AnalyticsOutlinedIcon/></Avatar>*/}
+						{/*		stats*/}
+						{/*	</MenuItem>*/}
+						{/*	<Divider/>*/}
+						{/*	<MenuItem>*/}
+						{/*		<ListItemIcon>*/}
+						{/*			<SettingsOutlinedIcon fontSize="small"/>*/}
+						{/*		</ListItemIcon>*/}
+						{/*		Account Settings*/}
+						{/*	</MenuItem>*/}
+						{/*	<MenuItem>*/}
+						{/*		<ListItemIcon>*/}
+						{/*			<Logout fontSize="small"/>*/}
+						{/*		</ListItemIcon>*/}
+						{/*		Logout*/}
+						{/*	</MenuItem>*/}
+						{/*</Menu>*/}
 					</>
 				}/>
 			</Box>
@@ -234,11 +241,13 @@ export default withRouter((props) => {
 					<EditorJs
 						enableReInitialize={true}
 						// data={editFdata}
-						data={valueEditorPreload}
+						// data={window.localStorage.getItem("latestDraft") && valueEditorPreload}
 						onReady={(instance)=>instance.toolbar.open()}
 						onChange={(api , editorData ) => handleDraft(editorData)}
 						tools={EDITOR_JS_TOOLS}
 						placeholder={'Tell your story...'}
+						// onCompareBlocks={(newBlocks, oldBlocks)=>{
+						// 	console.log("oldBlocks:",oldBlocks);console.log("newBlocks:",newBlocks);return isEqual(oldBlocks,newBlocks)}}
 					/>
 				</Container>
 			</Box>

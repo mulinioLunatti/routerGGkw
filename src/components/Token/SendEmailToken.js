@@ -24,7 +24,7 @@ export default withRouter(function SendEmailToken(props) {
 		})
 	}, [history, validateUserToken])
 	useEffect(() => {
-		userEmailVerify === false && sendToken({
+		userEmailVerify === false && !tokenEmailStatus && sendToken({
 				tokenUserEmail: userEmail,
 				tokenType: "HASH",
 				tokenService: "ELECTRONIC_MAIL",

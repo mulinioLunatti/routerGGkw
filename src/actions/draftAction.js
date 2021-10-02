@@ -7,7 +7,7 @@ import {Deserializer} from "jsonapi-serializer";
 export const writeDraft =  ({data},onCallback)=> dispatch => {
 	let sendData={};
 	if(window.localStorage.getItem("latestDraft") && window.localStorage.getItem("latestDraft").length>0 && window.localStorage.getItem("latestDraft")!=="undefined"){
-		sendData={credential:localStorage.credential,...data,"_id":window.localStorage.getItem("latestDraft")}
+		sendData={credential:localStorage.credential,...data,"draftId":window.localStorage.getItem("latestDraft")}
 	}else{
 		sendData={credential:window.localStorage.credential,...data};
 	}
@@ -15,7 +15,7 @@ export const writeDraft =  ({data},onCallback)=> dispatch => {
 	console.log(sendData);
 	axios({
 		method: 'post',
-		url: '/api/draft/write',
+		url: `${API_CONSTANTS.PATH}draft/write`,
 		data:sendData,
 		headers:{
 			'credential': localStorage.credential,
@@ -30,15 +30,12 @@ export const writeDraft =  ({data},onCallback)=> dispatch => {
 	}).then(
 		({data}) => {
 			typeof onCallback === 'function' && onCallback(data)
-			console.log(data["_id"]);
-			window.localStorage.setItem("latestDraft",data["_id"]);
+			console.log(data["draftId"]);
+			window.localStorage.setItem("latestDraft",data["draftId"]);
 			dispatch({
 				type: SET_DRAFT_WRITE,
 				payload: {}
 			});
-			// new Deserializer({keyForAttribute: "camelCase"}).deserialize(data, (error, []) => {
-			// });
-
 		}
 	).catch(
 		error => (error.response) ? ([500, 501, 502, 503, 504, 404].includes(error.response.status)) ? console.log(error.response.data) :
@@ -51,7 +48,7 @@ export const writeDraft =  ({data},onCallback)=> dispatch => {
 export const getDrafts =  (data,onCallback)=> dispatch => {
 	axios({
 		method: 'post',
-		url: '/api/draft/get',
+		url: `${API_CONSTANTS.PATH}draft/get`,
 		data: {credential:localStorage.credential},
 		headers:{
 			'credential': localStorage.credential,
@@ -83,7 +80,7 @@ export const getDrafts =  (data,onCallback)=> dispatch => {
 export const getSingleDraft =  ({id},onCallback)=> dispatch => {
 	axios({
 		method: 'post',
-		url: '/api/draft/read',
+		url: `${API_CONSTANTS.PATH}draft/read`,
 		data: {credential:localStorage.credential,_id:id},
 		headers:{
 			'credential': localStorage.credential,

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useCallback} from "react";
 import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Divider from '@mui/material/Divider';
@@ -24,7 +24,7 @@ import MenuUserComponent from "./MenuUser";
 import Header from "../Common/Header";
 import PortableWifiOffRoundedIcon from '@mui/icons-material/PortableWifiOffRounded';
 import {useUserContext} from "../../contexts/UserContext";
-import {Skeleton, Tab} from "@mui/material";
+import {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Skeleton, Tab} from "@mui/material";
 import {useStoryContext} from "../../contexts/StoryContext";
 import {useHistory} from "react-router-dom";
 import Footer from "../Common/Footer";
@@ -32,6 +32,7 @@ import _ from 'lodash';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import {TabContext, TabList, TabPanel} from "@mui/lab";
 import {useDraftContext} from "../../contexts/DraftContext";
+import EditorJs from "react-editor-js";
 // import {TabPanel} from "@mui/lab";
 
 // function createData(name, calories, fat, carbs, protein) {
@@ -60,30 +61,49 @@ export default function StoriesUser(){
     const [showDrafts , setShowDrafts]=React.useState([]);
     const [valueTab, setValueTab] = React.useState("1");
 
+    const [previewDialogOpen,setPreviewDialogOpen]=React.useState(false);
+    const [previewId,setPreviewId]=React.useState("");
+    const [previewItem,setPreviewItem]=React.useState({});
 
+
+
+
+
+    const [deleteDialogOpen,setDeleteDialogOpen]=React.useState(false);
+    const [deleteId,setDeleteId]=React.useState("");
+    const [deleteMode,setDeleteMode]=React.useState("");
+    const [deleteTitle,setDeleteTitle]=React.useState("");
+    const [init,setInit]=React.useState(false);
     // const {getStoriesUser}= useUserContext();
-    const {getStories}=useStoryContext()
+    const {getStories,deleteStory,getSingleStory}=useStoryContext()
     const {getDrafts}=useDraftContext()
     React.useEffect(()=>{
         validateUserToken({userToken:window.localStorage.getItem("credential")},()=>{},()=>{history.replace("/")})
     },[history,validateUserToken])
-    React.useEffect(()=>{
+    const getData=useCallback(()=>{
         getStories({},(data)=>{console.log(data);setRows(_.reverse(data.data));setState("loaded")})
         getDrafts({},(data)=>{console.log(data);setDrafts(_.reverse(data.data));setState("loaded")})
+    },[getStories,getDrafts,setRows,setDrafts,setState])
+    React.useEffect(()=>{
+        if(init===false){
+            getData();
+            setInit(true);
+        }
 
-    },[getStories,getDrafts])
+    },[getStories,getDrafts,getData,init])
 
     //userEmailVerification
     React.useEffect(() => {
         getUser({})
     }, [getUser])
     React.useEffect(() => {
-        userEmailVerify === false && history.push("/token/email/verify");
+        userEmailVerify === false && history.push("/token/email/send");
     }, [userEmailVerify,history])
 
     // const getStoriesUser=()=>{
     //     getStories({},(data)=>{console.log(data);setRows(data.data);setState("loaded")})
     // }
+
 
 
 
@@ -136,9 +156,58 @@ export default function StoriesUser(){
     const handleTabChange = (event, newValue) => {
         setValueTab(newValue);
     };
+    const deleteContent=()=>{
+        console.log(deleteId);
+        if(deleteMode==="story"){
+            deleteStory({id:deleteId},()=>{setDeleteId("");setDeleteMode("");setDeleteDialogOpen(false);getData()})
+        }
+    }
+    const getStoryPreview=(id)=>{
+        getSingleStory({id:id},(data)=>{
+            setPreviewId(id);
+            setPreviewItem(data.data[0]);
+            setPreviewDialogOpen(true);
+        })
+    }
 
     return (
         <React.Fragment>
+
+            <Dialog open={previewDialogOpen} onClose={()=>{setPreviewDialogOpen(false)}}>
+                <DialogTitle>
+                    {previewDialogOpen && previewItem.attributes["story-title"]}
+                </DialogTitle>
+                <DialogContent>
+                    <EditorJs readOnly={true}  enableReInitialize={true} data={previewDialogOpen && { "time" : 1550476186479,"version" : "2.8.1","blocks":previewItem.attributes["story-content"]}}/>
+                    <span sx={{opcaity:"0"}}>{previewId}</span>
+                </DialogContent>
+            </Dialog>
+
+            <Dialog
+                open={deleteDialogOpen}
+                onClose={()=>{setDeleteDialogOpen(false);setDeleteId("");setDeleteMode("")}}
+            >
+                <DialogTitle id="alert-dialog-title">
+                    {deleteMode==="story" ? "Delete This Story?" : "Delete This Draft?"}
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        {deleteMode==="story" ? "Are you sure you wand to delete this story ?" : "Are you sure you wand to delete this draft?"}
+                    </DialogContentText>
+                    <DialogContentText id="alert-dialog-description" textAlign={"center"}>
+                        <br/>
+                        <h4>{deleteTitle}</h4>
+                    </DialogContentText>
+
+                    <DialogActions>
+                        <Button onClick={()=>setDeleteDialogOpen(false)} autoFocus>cancel</Button>
+                        <Button variant={"contained"} color="error" onClick={()=>{deleteContent()}}>
+                            DELETE
+                        </Button>
+                    </DialogActions>
+                </DialogContent>
+            </Dialog>
+
             <TabContext value={valueTab}>
                 <Box display={"flex"} flexDirection={"column"} minHeight={"100vh"} >
                     <Box>
@@ -203,7 +272,7 @@ export default function StoriesUser(){
                                                     <TableRow>
                                                         <TableCell>
                                                             <Box width={"100%"} display={"flex"} flexDirection={"column"}  justifyContent={"center"}>
-                                                                <p>You dont have any stories yet  <Link href="/story/create">Create one</Link></p>
+                                                                <p>You dont have any stories yet  <Link href={"/story/create"} onClick={(e)=>{window.localStorage.removeItem("latestDraft")}}>Create one</Link></p>
                                                             </Box>
                                                         </TableCell>
                                                     </TableRow>
@@ -216,7 +285,7 @@ export default function StoriesUser(){
                                                             {index + 1}
                                                         </TableCell>
                                                         <TableCell component="th" scope="row">
-                                                            <Box fontSize={20}>
+                                                            <Box fontSize={20} sx={{cursor:"pointer"}} onClick={(e)=>{getStoryPreview(row.attributes["story-id"])}}>
                                                                 {row.attributes["story-title"]}
                                                                 <IconButton aria-label="delete" size="small" color="primary">
                                                                     <CallMadeIcon fontSize="inherit"/>
@@ -228,22 +297,22 @@ export default function StoriesUser(){
                                                             </Box>
                                                         </TableCell>
                                                         <TableCell align="right">
-                                                            <IconButton component="span">
+                                                            <IconButton disabled component="span">
                                                                 <ImageOutlinedIcon/>
                                                             </IconButton>
-                                                            <IconButton component="span">
+                                                            <IconButton disabled component="span">
                                                                 <PlayCircleOutlineIcon/>
                                                             </IconButton>
-                                                            <IconButton component="span">
+                                                            <IconButton disabled component="span">
                                                                 <DescriptionOutlinedIcon/>
                                                             </IconButton>
 
                                                         </TableCell>
                                                         <TableCell align="right">
                                                             <Button sx={{ml: 2, borderRadius: 25}}
-                                                                    variant="outlined">DELETE</Button>
-                                                            <Button sx={{ml: 2, borderRadius: 25}} variant="outlined" >Edit</Button>
-                                                            <Button sx={{ml: 2, borderRadius: 25}}
+                                                                    variant="outlined" onClick={(e)=>{setDeleteId(row.attributes["story-id"]);setDeleteDialogOpen(true);setDeleteMode("story");setDeleteTitle(row.attributes["story-title"])}}>DELETE</Button>
+                                                            <Button disabled sx={{ml: 2, borderRadius: 25}} variant="outlined" >Edit</Button>
+                                                            <Button disabled sx={{ml: 2, borderRadius: 25}}
                                                                     variant="outlined">Export</Button>
                                                         </TableCell>
                                                     </TableRow>
@@ -328,25 +397,25 @@ export default function StoriesUser(){
                                                                 </Box>
                                                             </TableCell>
                                                             <TableCell align="right">
-                                                                <IconButton component="span">
+                                                                <IconButton disabled={true} component="span">
                                                                     <ImageOutlinedIcon/>
                                                                 </IconButton>
-                                                                <IconButton component="span">
+                                                                <IconButton disabled={true} component="span">
                                                                     <PlayCircleOutlineIcon/>
                                                                 </IconButton>
-                                                                <IconButton component="span">
+                                                                <IconButton disabled={true} component="span">
                                                                     <DescriptionOutlinedIcon/>
                                                                 </IconButton>
 
                                                             </TableCell>
                                                             <TableCell align="right">
-                                                                <Button sx={{ml: 2, borderRadius: 25}}
+                                                                <Button disabled sx={{ml: 2, borderRadius: 25}}
                                                                         variant="outlined">DELETE</Button>
-                                                                <Button sx={{ml: 2, borderRadius: 25}} variant="outlined" onClick={(e)=>{
-                                                                    window.localStorage.setItem("latestDraft",draft.attributes["-id"]);
+                                                                <Button disabled sx={{ml: 2, borderRadius: 25}} variant="outlined" onClick={(e)=>{
+                                                                    window.localStorage.setItem("latestDraft",draft.attributes["draftId"]);
                                                                     history.replace("/story/create");
                                                                 }}>Edit</Button>
-                                                                <Button sx={{ml: 2, borderRadius: 25}}
+                                                                <Button disabled sx={{ml: 2, borderRadius: 25}}
                                                                         variant="outlined">Export</Button>
                                                             </TableCell>
                                                         </TableRow>
