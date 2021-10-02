@@ -179,7 +179,7 @@ export default function StoriesUser(){
                     {previewDialogOpen && previewItem.attributes["story-title"]}
                 </DialogTitle>
                 <DialogContent>
-                    <EditorJs tools={EDITOR_JS_TOOLS} readOnly={true}  enableReInitialize={true} data={previewDialogOpen && { "time" : 1550476186479,"version" : "2.8.1","blocks":previewItem.attributes["story-content"]}}/>
+                    <EditorJs tools={EDITOR_JS_TOOLS}   enableReInitialize={true} data={previewDialogOpen && { "time" : 1550476186479,"version" : "2.8.1","blocks":previewItem.attributes["story-content"]}}/>
                     <span sx={{opcaity:"0"}}>{previewId}</span>
                 </DialogContent>
             </Dialog>
