@@ -6,4 +6,4 @@
 /user/password/change /index.html 200
 /story/create /index.html 200
 /token/email/send /index.html 200
-/token/email/verify /index.html/token/email/verify/:splat 200
+/token/email/verify /index.html/:splat 200
