@@ -7,6 +7,7 @@ export default function LogoutUser(){
     const {user: {current: {userCredential}},logOutUser} = useUserContext();
     if (userCredential) {logOutUser({})}
     if (!userCredential) history.replace("/");
-    // if (!userCredential) return <Redirect to='/'  />;
-    return <React.Fragment></React.Fragment>
+    return <React.Fragment>
+        <p>logout</p>
+    </React.Fragment>
 }
