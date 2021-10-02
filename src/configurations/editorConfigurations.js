@@ -1,7 +1,7 @@
 import Delimiter from "@editorjs/delimiter";
 import Quote from "@editorjs/quote";
 import Header from "@editorjs/header";
-import SimpleVideo from "simple-video-editorjs";
+// import SimpleVideo from "simple-video-editorjs";
 import SimpleImage from "@editorjs/simple-image";
 import Embed from "@editorjs/embed";
 // import LinkTool from "@editorjs/link";
