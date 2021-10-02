@@ -1,2 +1,9 @@
 /api http://api.digifunction.com/:splat
 /user/logout /index.html 200
+/user/stories /index.html 200
+/user/password/forgot /index.html 200
+/user/password/reset /index.html 200
+/user/password/change /index.html 200
+/story/create /index.html 200
+/token/email/send /index.html 200
+/token/email/verify /index.html 200
