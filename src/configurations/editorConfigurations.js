@@ -31,7 +31,7 @@ export const EDITOR_JS_TOOLS = {
     attaches: {
         class: AttachesTool,
         config: {
-            endpoint: `${API_CONSTANTS.BASEURL}/file/upload?credential=${localStorage.getItem('credential')}`
+            endpoint: `${API_CONSTANTS.BASEURL}/api/file/upload?credential=${localStorage.getItem('credential')}`
         }
     },
     // tools: {
@@ -41,8 +41,8 @@ export const EDITOR_JS_TOOLS = {
         class: ImageTool,
         config: {
             endpoints: {
-                byFile: `${API_CONSTANTS.BASEURL}/file/upload?credential=${localStorage.getItem('credential')}`, // Your backend file uploader endpoint
-                byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
+                byFile: `${API_CONSTANTS.BASEURL}/api/file/upload?credential=${localStorage.getItem('credential')}`, // Your backend file uploader endpoint
+                // byUrl: 'http://localhost:8008/fetchUrl', // Your endpoint that provides uploading by Url
             }
         }
     }
