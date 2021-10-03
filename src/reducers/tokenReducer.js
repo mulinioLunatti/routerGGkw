@@ -1,5 +1,5 @@
 import {SET_TOKEN_CONFIRM, SET_TOKEN_SENT,SET_TOKEN_EMAIL_STATUS} from '../constants/actionTypesConstant'
-const initialState={tokenEmailStatus:null}
+const initialState={tokenEmailStatus:false}
 export default function tokenReducer(state= initialState,action){
 	switch (action.type){
 
