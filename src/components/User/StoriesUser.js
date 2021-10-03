@@ -322,7 +322,7 @@ export default function StoriesUser(){
                                         </Table>
 
                                     </TableContainer>
-                                        <Box  marginTop={"20px"} width={"100%"} textAlign={"center"} marginBottom={"300px"} alignItems={"center"} justifyContent={"center"} visibility={rows.length <5  ? "hidden" : "show"} >
+                                        <Box  marginTop={"20px"} width={"100%"} textAlign={"center"} marginBottom={"300px"} alignItems={"center"} justifyContent={"center"} visibility={rows.length <=5 || rows.length===showRows.length ? "hidden" : "show"} >
                                             {/*<Link href="#" fontSize="30px" onClick={(e)=>{showMoreStories()}}>Show More</Link>*/}
                                             <Button sx={{borderRadius:"25px"}} startIcon={<ExpandMoreIcon/>} variant="contained" onClick={(e)=>{showMoreStories()}}>show more</Button>
                                         </Box>

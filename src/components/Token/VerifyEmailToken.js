@@ -50,7 +50,7 @@ export default function VerifyEmailToken() {
                         <MarkEmailReadOutlinedIcon color="primary" sx={{fontSize: "70px"}}/>
                     </Box>
                     <Box display="flex" justifyContent={"center"} flexDirection="row">
-                        <Box>THanks</Box>
+                        <Box>Thanks</Box>
                         <Box color="#888888">Your email address has been verified. Your account Is now active.</Box>
                     </Box>
                     <Box marginBottom="40px">Please use the link below to your account. </Box>
